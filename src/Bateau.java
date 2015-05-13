@@ -1,5 +1,5 @@
 /**
-*
+* test
 */
 public class Bateau {
 
