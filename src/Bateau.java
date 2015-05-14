@@ -1,5 +1,5 @@
 /**
- * La classe principale du jeu.
+ * Cette classe définit l'objet "bateau".
  * @author Julien EMMANUEL, Charlotte RICHAD, Thomas DUTOUR, Alexis SAGET
  */
 public class Bateau {

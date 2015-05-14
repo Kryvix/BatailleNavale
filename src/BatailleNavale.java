@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 /**
- * Cette classe définit l'objet "bateau".
+ * La classe principale du jeu.
  * @author Julien EMMANUEL, Charlotte RICHAD, Thomas DUTOUR, Alexis SAGET
  */
 public class BatailleNavale {
