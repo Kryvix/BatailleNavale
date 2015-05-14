@@ -1,6 +1,7 @@
-bin
-doc
-*.prefs
+# Décommenter pour ignorer les dossier / fichiers suivants :
+# bin
+# doc
+# *.prefs
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
