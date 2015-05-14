@@ -33,6 +33,14 @@ public class Bateau {
 	{
 		return nom;
 	}
+	public int getTaille()
+	{
+		return taille;
+	}
+	public boolean isVertical()
+	{
+		return vertical;
+	}
 	public void position(int positionX, int positionY, boolean vertical)
 	{
 		this.positionX = positionX;
