@@ -29,7 +29,49 @@ public class BatailleNavale {
 	{
 		bateaux[0].position(1,3,true);
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Veuillez saisir un mot :");
-		String str = sc.nextLine();
+		for(int i = 0; i<5; i++)
+		{
+			System.out.println("Ligne du "+bateaux[i].getName()+" :");
+			String ligneString = sc.nextLine();
+			while(!verifierNombre(ligneString))
+			{
+				System.out.println("Veuillez entrer un nombre entre 1 et 10 :");
+				ligneString = sc.nextLine();
+			}
+			System.out.println("Colonne du "+bateaux[i].getName()+" :");
+			String colonneString = sc.nextLine();
+			while(!verifierNombre(colonneString))
+			{
+				System.out.println("Veuillez entrer un nombre entre 1 et 10 :");
+				colonneString = sc.nextLine();
+			}
+			bateaux[i].position(Integer.parseInt(ligneString), Integer.parseInt(colonneString),true);
+		}
 	}
+	public static boolean verifierNombre(String chaine)
+	{
+		boolean nombreValide = true;
+		int i = 0;
+		while(nombreValide && i <chaine.length())
+		{
+			if(Character.isDigit(chaine.charAt(i)))
+			{
+				nombreValide = true;
+			}
+			else
+			{
+				nombreValide = false;
+			}
+			i++;
+		}
+		if(nombreValide)
+		{
+			if(Integer.parseInt(chaine) > 10 || Integer.parseInt(chaine) < 1)
+			{
+				nombreValide = false;
+			}
+		}
+		return nombreValide;
+	}
+	
 }

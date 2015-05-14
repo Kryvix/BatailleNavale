@@ -29,6 +29,10 @@ public class Bateau {
 		String chaine = nom + " - taille = " + taille + " - position = {" + positionX + ";" + positionY + "}";
 		return chaine;
 	}
+	public String getName()
+	{
+		return nom;
+	}
 	public void position(int positionX, int positionY, boolean vertical)
 	{
 		this.positionX = positionX;
