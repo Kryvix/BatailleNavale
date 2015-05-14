@@ -26,7 +26,7 @@ public class Bateau {
 	}
 	public String toString()
 	{
-		String chaine = nom + " - taille = " + taille + " - position = {" + positionX + ";" + positionY + "}";
+		String chaine = nom + " - taille = " + taille + " - position = {" + positionX + ";" + positionY + "}" + vertical;
 		return chaine;
 	}
 	public String getName()
@@ -38,5 +38,27 @@ public class Bateau {
 		this.positionX = positionX;
 		this.positionY = positionY;
 		this.vertical = vertical;
+	}
+	public boolean verifierPosition()
+	{
+		boolean positionValide = true;
+		for(int i = 0; i<taille; i++)
+		{
+			if(vertical)
+			{
+				int x = positionX;
+				int y = positionY + i;
+				if(x < 0 || x > 9 || y < 0 || y > 9)
+					positionValide = false;
+			}
+			else
+			{
+				int x = positionX + i;
+				int y = positionY;
+				if(x < 0 || x > 9 || y < 0 || y > 9)
+					positionValide = false;
+			}
+		}
+		return positionValide;
 	}
 }
