@@ -19,8 +19,9 @@ public class BatailleNavale {
 		genererbateaux(grilleJoueur,grilleIA);
 	}
 	/**
-	 * Génère les bateauxJ pour un joueur et l'IA
-	 * @param grilleJoueur
+	 * Génère les bateaux pour le joueur et l'IA.
+	 * @param grilleJoueur La grille du joueur sur laquelle ses bateaux seront placés.
+	 * @param grilleIA La grille de l'IA sur laquelle ses bateaux seront placés.
 	 */
 	public static void genererbateaux (int[][] grilleJoueur, int[][]grilleIA)
 	{
@@ -40,6 +41,11 @@ public class BatailleNavale {
 		positionnerIA(bateauxIA, grilleIA);
 		afficherGrille(grilleIA);
 	}
+	/**
+	 * Demande à l'utilisateur la position de ses bateaux et les ajoute à sa grille.
+	 * @param bateauxJ Le tableau des bateaux à positionner.
+	 * @param grilleJoueur La grille dans laquelle les bateaux seront positionnés.
+	 */
 	public static void positionner(Bateau[] bateauxJ, int[][] grilleJoueur)
 	{
 		bateauxJ[0].position(1,3,true);
@@ -127,6 +133,11 @@ public class BatailleNavale {
 			afficherGrille(grilleJoueur);
 		}
 	}
+	/**
+	 * Positionne aléatoirement les bateaux de l'IA.
+	 * @param bateauxIA Le tableau des bateaux à positionner.
+	 * @param grilleIA La grille dans laquelle les bateaux seront positionnés.
+	 */
 	public static void positionnerIA(Bateau[] bateauxIA, int[][] grilleIA)
 	{
 		bateauxIA[0].position(1,3,true);
@@ -188,6 +199,11 @@ public class BatailleNavale {
 			}
 		}
 	}
+	/**
+	 * Vérifie qu'une chaîne de caractère correspond bien à un nombre compris entre 1 et 10 inclus.
+	 * @param chaine La chaîne à analyser
+	 * @return TRUE si le nombre est valide, sinon FALSE.
+	 */
 	public static boolean verifierNombre(String chaine)
 	{
 		boolean nombreValide = true;
@@ -213,6 +229,10 @@ public class BatailleNavale {
 		}
 		return nombreValide;
 	}
+	/**
+	 * Affiche une grille entrée en paramètre (utile seulement pendant la phase de développement pour effectuer des tests).
+	 * @param grille La grille à afficher
+	 */
 	public static void afficherGrille(int[][] grille)
 	{
 		System.out.println();

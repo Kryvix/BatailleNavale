@@ -10,6 +10,11 @@ public class Bateau {
 	private boolean vertical;
 	private int positionX;
 	private int positionY;
+	/**
+	 * Le constructeur de l'objet bateau.
+	 * @param nom Le nom du bateau.
+	 * @param taille La taille du bateau.
+	 */
 	public Bateau(String nom, int taille)
 	{
 		this.nom = nom;
@@ -24,29 +29,54 @@ public class Bateau {
 			etat[i] = true;
 		}
 	}
+	/**
+	 * Renvoie les caractéristiques principales du bateau sous forme d'une chaîne de caractères.
+	 */
 	public String toString()
 	{
 		String chaine = nom + " - taille = " + taille + " - position = {" + positionX + ";" + positionY + "}" + vertical;
 		return chaine;
 	}
+	/**
+	 * Renvoie le nom d'un bateau.
+	 * @return Nom du bateau.
+	 */
 	public String getName()
 	{
 		return nom;
 	}
+	/**
+	 * Renvoie la taille d'un bateau.
+	 * @return Taille du bateau.
+	 */
 	public int getTaille()
 	{
 		return taille;
 	}
+	/**
+	 * Indique si le bateau est horizontal ou vertical.
+	 * @return TRUE si le bateau est vertical, sinon FALSE;
+	 */
 	public boolean isVertical()
 	{
 		return vertical;
 	}
+	/**
+	 * Définit précisément la position du bateau
+	 * @param positionX La colonne d'origine du bateau.
+	 * @param positionY La ligne d'origine du bateau.
+	 * @param vertical L'orientation du bateau.
+	 */
 	public void position(int positionX, int positionY, boolean vertical)
 	{
 		this.positionX = positionX;
 		this.positionY = positionY;
 		this.vertical = vertical;
 	}
+	/**
+	 * Vérifie si le bateau n'est pas en dehors de la grille (dont la taille est 10x10)
+	 * @return TRUE si le bateau est bien entièrement contenu dans la grille, sinon FALSE.
+	 */
 	public boolean verifierPosition()
 	{
 		boolean positionValide = true;
