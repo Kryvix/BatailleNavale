@@ -99,4 +99,24 @@ public class Bateau {
 		}
 		return positionValide;
 	}
+	/**
+	 * Détruit la case ciblée du bateau.
+	 * @param x La colonne ciblée
+	 * @param y La ligne ciblée
+	 * @return
+	 */
+	public boolean destroyCell(int x, int y)
+	{
+		boolean coule = false;
+		int pos = 0;
+		if(vertical)
+			pos = y - positionY;
+		else
+			pos = x - positionX;
+		this.etat[pos] = false;
+		this.vie--;
+		if(this.vie == 0)
+			coule = true;
+		return coule;
+	}
 }

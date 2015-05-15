@@ -16,30 +16,66 @@ public class BatailleNavale {
 		int[][] grilleIA = new int[10][10];
 		// Grille de l'IA visible par le joueur :
 		int[][] grilleIAV = new int[10][10];
-		genererbateaux(grilleJoueur,grilleIA);
-	}
-	/**
-	 * Génère les bateaux pour le joueur et l'IA.
-	 * @param grilleJoueur La grille du joueur sur laquelle ses bateaux seront placés.
-	 * @param grilleIA La grille de l'IA sur laquelle ses bateaux seront placés.
-	 */
-	public static void genererbateaux (int[][] grilleJoueur, int[][]grilleIA)
-	{
+		// Création des bateaux du joueur :
 		Bateau[] bateauxJ = new Bateau[5];
 		bateauxJ[0] = new Bateau("Porte-avions",5);
 		bateauxJ[1] = new Bateau("Croiseur",4);
 		bateauxJ[2] = new Bateau("Contre-torpilleur",3);
 		bateauxJ[3] = new Bateau("Sous-marin",3);
 		bateauxJ[4] = new Bateau("Torpilleur",2);
+		// Création des bateaux de l'IA :
 		Bateau[] bateauxIA = new Bateau[5];
 		bateauxIA[0] = new Bateau("Porte-avions",5);
 		bateauxIA[1] = new Bateau("Croiseur",4);
 		bateauxIA[2] = new Bateau("Contre-torpilleur",3);
 		bateauxIA[3] = new Bateau("Sous-marin",3);
 		bateauxIA[4] = new Bateau("Torpilleur",2);
+		// Positionnement des bateaux :
 		positionner(bateauxJ, grilleJoueur);
 		positionnerIA(bateauxIA, grilleIA);
-		afficherGrille(grilleIA);
+		afficherGrilleDev(grilleIA);
+		Joueur joueur = new Joueur();
+		Joueur IA = new Joueur();
+		Scanner sc = new Scanner(System.in);
+		afficherGrilleDev(grilleJoueur);
+		while(joueur.getLife() != 0 && IA.getLife() != 0)
+		{
+			System.out.print("Grille adverse :");
+			afficherGrille(grilleIAV);
+			System.out.println("Ligne de la case à viser :");
+			String ligneString = sc.nextLine();
+			while(!verifierNombre(ligneString))
+			{
+				System.out.println("Veuillez entrer un nombre entre 1 et 10 :");
+				ligneString = sc.nextLine();
+			}
+			System.out.println("Colonne de la case à viser :");
+			String colonneString = sc.nextLine();
+			while(!verifierNombre(colonneString))
+			{
+				System.out.println("Veuillez entrer un nombre entre 1 et 10 :");
+				colonneString = sc.nextLine();
+			}
+			int positionX = Integer.parseInt(colonneString) - 1;
+			int positionY = Integer.parseInt(ligneString) - 1;
+			if(grilleIA[positionX][positionY] == 0)
+			{
+				System.out.println("Vous n'avez rien touché !");
+				grilleIAV[positionX][positionY] = 1;
+			}
+			else
+			{
+				boolean coule = bateauxIA[grilleIA[positionX][positionY]-1].destroyCell(positionX,positionY);
+				if(coule)
+				{
+					System.out.println("Coulé !");
+					IA.enleverVie();
+				}
+				else
+					System.out.println("Touché !");
+				grilleIAV[positionX][positionY] = 2;
+			}
+		}
 	}
 	/**
 	 * Demande à l'utilisateur la position de ses bateaux et les ajoute à sa grille.
@@ -50,7 +86,7 @@ public class BatailleNavale {
 	{
 		bateauxJ[0].position(1,3,true);
 		Scanner sc = new Scanner(System.in);
-		afficherGrille(grilleJoueur);
+		afficherGrilleDev(grilleJoueur);
 		for(int i = 0; i<5; i++)
 		{
 			boolean dansLaGrille = false;
@@ -130,8 +166,9 @@ public class BatailleNavale {
 				}
 				grilleJoueur[x][y] = i+1;
 			}
-			afficherGrille(grilleJoueur);
+			afficherGrilleDev(grilleJoueur);
 		}
+		// sc.close();
 	}
 	/**
 	 * Positionne aléatoirement les bateaux de l'IA.
@@ -233,7 +270,7 @@ public class BatailleNavale {
 	 * Affiche une grille entrée en paramètre (utile seulement pendant la phase de développement pour effectuer des tests).
 	 * @param grille La grille à afficher
 	 */
-	public static void afficherGrille(int[][] grille)
+	public static void afficherGrilleDev(int[][] grille)
 	{
 		System.out.println();
 		for(int i = 0; i < 10; i++)
@@ -242,6 +279,29 @@ public class BatailleNavale {
 			{
 				System.out.print("|");
 				System.out.print(grille[j][i]);
+			}
+			System.out.print("|");
+			System.out.println();
+		}
+	}
+	/**
+	 * Affiche une grille entrée en paramètre.
+	 * @param grille La grille à afficher
+	 */
+	public static void afficherGrille(int[][] grille)
+	{
+		System.out.println();
+		for(int i = 0; i < 10; i++)
+		{
+			for(int j = 0; j < 10; j++)
+			{
+				System.out.print("|");
+				if(grille[j][i] == 0)
+					System.out.print(" ");
+				else if(grille[j][i] == 1)
+					System.out.print("~");
+				else
+					System.out.print("*");
 			}
 			System.out.print("|");
 			System.out.println();
