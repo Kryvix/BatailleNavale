@@ -46,185 +46,30 @@ public class BatailleNavale {
 		Joueur IA = new Joueur();
 		Scanner sc = new Scanner(System.in);
 		afficherGrilleDev(grilleJoueur);
+		tourJoueur(grilleIAV, sc, IA, grilleIA, bateauxIA);
 		while(joueur.getLife() != 0 && IA.getLife() != 0)
 		{
-			tourJoueur(grilleIAV, sc, IA, grilleIA, bateauxIA);
 			int x = 0;
 			int y = 0;
 			do
 			{
 				while(grilleJoueurV[x][y] != 0)
 				{
-					x = (int)(Math.random()*13);
-					y = (int)(Math.random()*13);
+					x = (int)(Math.random()*12);
+					y = (int)(Math.random()*12);
 				}
-				// Premier tir
 				boolean[] etat = bombe(x, y, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-				if (etat[0] && !etat[1] && grilleJoueurV[x-1][y]==0)
+				if (etat[0] && !etat[1])
 				{
-					etat = bombe(x-1, y, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-					if (etat[0] && !etat[1] && grilleJoueurV[x-2][y]==0)
-					{
-						etat = bombe(x-2, y, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);	
-						if (etat[0] && !etat[1] && grilleJoueurV[x-3][y]==0)
-						{
-							etat = bombe(x-3, y, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-							if (etat[0] && !etat[1] && grilleJoueurV[x-4][y]==0) 
-							{
-								etat = bombe(x-4, y, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-								if (etat[0] && !etat[1] && grilleJoueurV[x+1][y]==0)
-								{
-									System.out.println("T'es un putain de gros connard de merde qui vient d'essayer de m'entuber heiiin!!!Mais j'me fais pas eu moi monsieur, tu vois j'suis une IA donc j'suis intelligente, na!!!ALors comme qui dirait va bien n***** ta mere");
-									etat = bombe(x+1, y, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);	
-									if (etat[0] && !etat[1] && grilleJoueurV[x+2][y]==0)
-									{
-										etat = bombe(x+2, y, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);	
-										if (etat[0] && !etat[1] && grilleJoueurV[x+3][y]==0)
-										{
-											etat = bombe(x+3, y, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-											if (etat[0] && !etat[1] && grilleJoueurV[x+4][y]==0) 
-											{
-												etat = bombe(x+4, y, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-											}
-										}
-									}
-								}
-							}
-							else if (etat[0] && !etat[1] && grilleJoueurV[x+1][y]==0)
-							{
-								etat = bombe(x+1, y, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-							}
-						}
-						else if (etat[0] && !etat[1] && grilleJoueurV[x+1][y]==0)
-						{
-							etat = bombe(x+1, y, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-						}
-					}
-					else if (etat[0] && !etat[1] && grilleJoueurV[x+1][y]==0)
-					{
-						etat = bombe(x+1, y, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-					}
+					recherche(x, y, (int)((Math.random()*4)+1), grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
 				}
-				else if (etat[0] && !etat[1] && grilleJoueurV[x+1][y]==0)
-				{
-					etat = bombe(x+1, y, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-				}
-				else if (etat[0] && !etat[1] && grilleJoueurV[x][y-1]==0)
-				{
-					etat = bombe(x, y-1, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-				}
-				else if (etat[0] && !etat[1] && grilleJoueurV[x][y+1]==0)
-				{
-					etat = bombe(x, y+1, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-				}
-				/*
-				if(grilleJoueur[x-1][y-1] == 0)
-				{
-					System.out.println("L'ordinateur n'a rien touché !");
-					grilleJoueurV[x][y] = 1;
-					tourJoueur(grilleIAV, sc, IA, grilleIA, bateauxIA);
-				}
-				else
-				{
-					boolean coule = bateauxJ[grilleJoueur[x-1][y-1]-1].destroyCell(x-1,y-1);
-					if(coule)
-					{
-						System.out.println("L'ordinateur a coulé votre "+bateauxJ[grilleJoueur[x-1][y-1]-1].getName()+" !");
-						joueur.enleverVie();
-					}
-					else
-						System.out.println("L'ordinateur a touché votre "+bateauxJ[grilleJoueur[x-1][y-1]-1].getName()+" !");
-					grilleJoueurV[x][y] = 2;
-					tourJoueur(grilleIAV, sc, IA, grilleIA, bateauxIA);
-					// 2e tir
-					if(grilleJoueurV[x-1][y]==0)
-					{
-						if(grilleJoueur[x-2][y-1] == 0)
-						{
-							System.out.println("L'ordinateur n'a rien touché !");
-							grilleJoueurV[x-1][y] = 1;
-							tourJoueur(grilleIAV, sc, IA, grilleIA, bateauxIA);
-						}
-						else
-						{
-							coule = bateauxJ[grilleJoueur[x-2][y-1]-1].destroyCell(x-2,y-1);
-							if(coule)
-							{
-								System.out.println("L'ordinateur a coulé votre "+bateauxJ[grilleJoueur[x-2][y-1]-1].getName()+" !");
-								joueur.enleverVie();
-							}
-							else
-								System.out.println("L'ordinateur a touché votre "+bateauxJ[grilleJoueur[x-2][y-1]-1].getName()+" !");
-							grilleJoueurV[x-1][y] = 2;
-							tourJoueur(grilleIAV, sc, IA, grilleIA, bateauxIA);
-							// 3e tir
-							if(grilleJoueur[x-3][y-1] == 0)
-							{
-								System.out.println("L'ordinateur n'a rien touché !");
-								grilleJoueurV[x-2][y] = 1;
-								tourJoueur(grilleIAV, sc, IA, grilleIA, bateauxIA);
-							}
-							else
-							{
-								coule = bateauxJ[grilleJoueur[x-3][y-1]-1].destroyCell(x-3,y-1);
-								if(coule)
-								{
-									System.out.println("L'ordinateur a coulé votre "+bateauxJ[grilleJoueur[x-3][y-1]-1].getName()+" !");
-									joueur.enleverVie();
-								}
-								else
-									System.out.println("L'ordinateur a touché votre "+bateauxJ[grilleJoueur[x-3][y-1]-1].getName()+" !");
-								grilleJoueurV[x-2][y] = 2;
-								tourJoueur(grilleIAV, sc, IA, grilleIA, bateauxIA);
-							}
-						}
-					}
-					else if(grilleJoueurV[x+1][y]==0)
-					{
-						if(grilleJoueur[x][y-1] == 0)
-						{
-							System.out.println("L'ordinateur n'a rien touché !");
-							grilleJoueurV[x][y] = 1;
-							tourJoueur(grilleIAV, sc, IA, grilleIA, bateauxIA);
-						}
-						else
-						{
-							coule = bateauxJ[grilleJoueur[x][y-1]-1].destroyCell(x,y-1);
-							if(coule)
-							{
-								System.out.println("L'ordinateur a coulé votre "+bateauxJ[grilleJoueur[x][y-1]-1].getName()+" !");
-								joueur.enleverVie();
-							}
-							else
-								System.out.println("L'ordinateur a touché votre "+bateauxJ[grilleJoueur[x][y-1]-1].getName()+" !");
-							grilleJoueurV[x+1][y] = 2;
-							tourJoueur(grilleIAV, sc, IA, grilleIA, bateauxIA);
-							// 3e tir
-							if(grilleJoueur[x+1][y-1] == 0)
-							{
-								System.out.println("L'ordinateur n'a rien touché !");
-								grilleJoueurV[x+2][y] = 1;
-								tourJoueur(grilleIAV, sc, IA, grilleIA, bateauxIA);
-							}
-							else
-							{
-								coule = bateauxJ[grilleJoueur[x+1][y-1]-1].destroyCell(x+1,y-1);
-								if(coule)
-								{
-									System.out.println("L'ordinateur a coulé votre "+bateauxJ[grilleJoueur[x+1][y-1]-1].getName()+" !");
-									joueur.enleverVie();
-								}
-								else
-									System.out.println("L'ordinateur a touché votre "+bateauxJ[grilleJoueur[x+1][y-1]-1].getName()+" !");
-								grilleJoueurV[x+2][y] = 2;
-								tourJoueur(grilleIAV, sc, IA, grilleIA, bateauxIA);
-							}
-						}
-					}
-				}*/
 			}
 			while(grilleJoueur[x-1][y-1] == 0 || grilleJoueur[x-1][y-1] == 1);
 		}
+		if(joueur.getLife() == 0)
+			System.out.println("Vous avez perdu.");
+		else
+			System.out.println("Vous avez gagné ! Bravo !");
 	}
 	/**
 	 * Demande à l'utilisateur la position de ses bateaux et les ajoute à sa grille.
@@ -422,9 +267,9 @@ public class BatailleNavale {
 	public static void afficherGrilleDev(int[][] grille)
 	{
 		System.out.println();
-		for(int i = 0; i < 10; i++)
+		for(int i = 0; i < grille.length; i++)
 		{
-			for(int j = 0; j < 10; j++)
+			for(int j = 0; j < grille[0].length; j++)
 			{
 				System.out.print("|");
 				System.out.print(grille[j][i]);
@@ -440,9 +285,9 @@ public class BatailleNavale {
 	public static void afficherGrille(int[][] grille)
 	{
 		System.out.println();
-		for(int i = 0; i < 10; i++)
+		for(int i = 0; i < grille.length; i++)
 		{
-			for(int j = 0; j < 10; j++)
+			for(int j = 0; j < grille[0].length; j++)
 			{
 				System.out.print("|");
 				if(grille[j][i] == 0)
@@ -491,6 +336,7 @@ public class BatailleNavale {
 			{
 				System.out.println("Coule !");
 				IA.enleverVie();
+				System.out.println(IA.getLife());
 			}
 			else
 				System.out.println("Touche !");
@@ -508,6 +354,7 @@ public class BatailleNavale {
 		}
 		else
 		{
+			etat[0] = true;
 			etat[1] = bateauxJ[grilleJoueur[x-1][y-1]-1].destroyCell(x-1,y-1);
 			if(etat[1])
 			{
@@ -517,11 +364,79 @@ public class BatailleNavale {
 			else
 			{
 				System.out.println("L'ordinateur a touché votre "+bateauxJ[grilleJoueur[x-1][y-1]-1].getName()+" !");
-				etat[0] = true;
 			}
 			grilleJoueurV[x][y] = 2;
 		}
+		System.out.print("Votre grille :");
+		afficherGrille(grilleJoueurV);
 		tourJoueur(grilleIAV, sc, IA, grilleIA, bateauxIA);
+		return etat;
+	}
+	public static boolean[] recherche(int x, int y, int direction, int[][] grilleJoueur, int[][] grilleJoueurV, int[][] grilleIAV, Scanner sc, Joueur IA, Joueur joueur, int[][] grilleIA, Bateau[] bateauxIA, Bateau[] bateauxJ)
+	{
+		boolean[] etat = {true,false};
+		int i = 1;
+		int j = 0;
+		if(direction == 1)
+		{
+			while(!etat[1] && etat[0] && grilleJoueurV[x-i][y] == 0)
+			{
+				etat = bombe(x-i, y, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+				i++;
+			}
+			while(!etat[1])
+			{
+				etat = recherche(x, y, 2 + j, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+				j++;
+			}
+		}
+		else if(direction == 2)
+		{
+			while(!etat[1] && etat[0] && grilleJoueurV[x+i][y] == 0)
+			{
+				etat = bombe(x+i, y, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+				i++;
+			}
+			while(!etat[1] && j<=1)
+			{
+				etat = recherche(x, y, 3 + j, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+				j++;
+			}
+			if(!etat[1])
+			{
+				etat = recherche(x, y, 1, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+			}
+		}
+		else if(direction == 3)
+		{
+			while(!etat[1] && etat[0] && grilleJoueurV[x][y-i] == 0)
+			{
+				etat = bombe(x, y-i, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+				i++;
+			}
+			if(!etat[1])
+			{
+				etat = recherche(x, y, 4, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+			}
+			while(!etat[1])
+			{
+				etat = recherche(x, y, 1+j, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+				j++;
+			}
+		}
+		else
+		{
+			while(!etat[1] && etat[0] && grilleJoueurV[x][y+i] == 0)
+			{
+				etat = bombe(x, y+i, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+				i++;
+			}
+			while(!etat[1])
+			{
+				etat = recherche(x, y, 1+j, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+				j++;
+			}
+		}
 		return etat;
 	}
 }
