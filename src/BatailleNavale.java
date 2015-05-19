@@ -176,7 +176,6 @@ public class BatailleNavale {
 			}
 			afficherGrilleDev(grilleJoueur);
 		}
-		// sc.close();
 	}
 	/**
 	 * Positionne aléatoirement les bateaux de l'IA.
@@ -439,29 +438,29 @@ public class BatailleNavale {
 						{
 							for(int w = 0; w<3; w++)
 							{
-								if(grilleJoueurV[x-(i-1)][y] == 2)
-									grilleJoueurV[x-(i-1)][y] = 3;
-								i--;
-							}
-							for(int w = 0; w<3; w++)
-							{
-								if(grilleJoueurV[x-(i-1)][y] == 2)
-									grilleJoueurV[x-(i-1)][y] = 3;
-								i--;
-								boolean aTrouve = false;
-								int count = 1;
-								while((!aTrouve && count != 300) && (joueur.getLife() != 0 && IA.getLife() != 0))
+								try
 								{
-									int g = (int)(Math.random()*12);
-									int h = (int)(Math.random()*12);
-									if(grilleJoueurV[g][h] == 2 && joueur.getLife() != 0 && IA.getLife() != 0)
-									{
-										etat = recherche(g, h, (int)((Math.random()*4)+1), grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-										if(!etat[0] && !etat[1])
-											grilleJoueurV[g][h] = 3;
-									}
-									count++;
+									if(grilleJoueurV[x-(i-1)][y] == 2)
+										grilleJoueurV[x-(i-1)][y] = 3;
 								}
+								finally
+								{
+									i--;
+								}
+							}
+							boolean aTrouve = false;
+							int count = 1;
+							while((!aTrouve && count != 300) && (joueur.getLife() != 0 && IA.getLife() != 0))
+							{
+								int g = (int)(Math.random()*12);
+								int h = (int)(Math.random()*12);
+								if(grilleJoueurV[g][h] == 2 && joueur.getLife() != 0 && IA.getLife() != 0)
+								{
+									etat = recherche(g, h, (int)((Math.random()*4)+1), grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+									if(!etat[0] && !etat[1])
+										grilleJoueurV[g][h] = 3;
+								}
+								count++;
 							}
 						}
 					}
@@ -488,9 +487,15 @@ public class BatailleNavale {
 						{
 							for(int w = 0; w<3; w++)
 							{
-								if(grilleJoueurV[x+(i-1)][y] == 2)
-									grilleJoueurV[x+(i-1)][y] = 3;
-								i--;
+								try
+								{
+									if(grilleJoueurV[x+(i-1)][y] == 2)
+										grilleJoueurV[x+(i-1)][y] = 3;
+								}
+								finally
+								{
+									i--;
+								}
 							}
 							boolean aTrouve = false;
 							int count = 1;
@@ -531,9 +536,15 @@ public class BatailleNavale {
 						{
 							for(int w = 0; w<3; w++)
 							{
-								if(grilleJoueurV[x][y-(i-1)] == 2)
-									grilleJoueurV[x][y-(i-1)] = 3;
-								i--;
+								try
+								{
+									if(grilleJoueurV[x][y-(i-1)] == 2)
+										grilleJoueurV[x][y-(i-1)] = 3;
+								}
+								finally
+								{
+									i--;
+								}
 							}
 							boolean aTrouve = false;
 							int count = 1;
@@ -574,9 +585,15 @@ public class BatailleNavale {
 						{
 							for(int w = 0; w<3; w++)
 							{
-								if(grilleJoueurV[x][y+(i-1)] == 2)
-									grilleJoueurV[x][y+(i-1)] = 3;
-								i--;
+								try
+								{
+									if(grilleJoueurV[x][y+(i-1)] == 2)
+										grilleJoueurV[x][y+(i-1)] = 3;
+								}
+								finally
+								{
+									i--;
+								}
 							}
 							boolean aTrouve = false;
 							int count = 1;
