@@ -112,11 +112,41 @@ public class BatailleNavale {
 				else if (etat[0] && !etat[1] && grilleJoueurV[x][y-1]==0)
 				{
 					etat = bombe(x, y-1, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+					if (etat[0] && !etat[1] && grilleJoueurV[x][y-2]==0)
+						{
+							etat = bombe(x, y-2, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);	
+							if (etat[0] && !etat[1] && grilleJoueurV[x][y-3]==0)
+							{
+								etat = bombe(x, y-3, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+								if (etat[0] && !etat[1] && grilleJoueurV[x][y-4]==0) 
+								{
+									etat = bombe(x, y-4, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+									if (etat[0] && !etat[1] && grilleJoueurV[x][y+1]==0)
+									{
+										System.out.println("T'es un putain de gros connard de merde qui vient d'essayer de m'entuber heiiin!!!Mais j'me fais pas eu moi monsieur, tu vois j'suis une IA donc j'suis intelligente, na!!!ALors comme qui dirait va bien n***** ta mere");
+										etat = bombe(x, y+1, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);	
+										if (etat[0] && !etat[1] && grilleJoueurV[x][y+2]==0)
+										{
+											etat = bombe(x, y+2, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);	
+											if (etat[0] && !etat[1] && grilleJoueurV[x][y+3]==0)
+											{
+												etat = bombe(x, y+3, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+												if (etat[0] && !etat[1] && grilleJoueurV[x][y+4]==0) 
+												{
+													etat = bombe(x, y+4, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+												}
+											}
+										}
+									}
+								}
+							}
+						}
 				}
 				else if (etat[0] && !etat[1] && grilleJoueurV[x][y+1]==0)
 				{
 					etat = bombe(x, y+1, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
 				}
+			
 				/*
 				if(grilleJoueur[x-1][y-1] == 0)
 				{
