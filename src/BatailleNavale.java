@@ -409,20 +409,12 @@ public class BatailleNavale {
 		boolean[] etat = {true,false};
 		int i = 1;
 		boolean caseVide = false;
-<<<<<<< HEAD
 		for(int z = 0; z<grilleJoueurV.length - x; z++)
-=======
-		for(int z = 0; z<grilleJoueurV.length - 1; z++)
->>>>>>> origin/master
 		{
 			if(grilleJoueurV[z][y] == 0)
 				caseVide = true;
 		}
-<<<<<<< HEAD
-		for(int z = 0; z<grilleJoueurV.length; z++)
-=======
 		for(int m = 0; m<grilleJoueurV[0].length - 1; m++)
->>>>>>> origin/master
 		{
 			if(grilleJoueurV[x][m] == 0)
 				caseVide = true;
