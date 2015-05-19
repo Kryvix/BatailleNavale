@@ -367,6 +367,14 @@ public class BatailleNavale {
 			}
 			grilleJoueurV[x][y] = 2;
 		}
+		for(int i = 1; i < grilleJoueurV.length-1; i++)
+		{
+			for(int j = 1; j < grilleJoueurV[0].length-1; j++)
+			{
+				if(grilleJoueurV[i-1][j] == 1 && grilleJoueurV[i+1][j] == 1 && grilleJoueurV[i][j-1] == 1 && grilleJoueurV[i][j+1] == 1)
+					grilleJoueurV[i][j] = 1;
+			}
+		}
 		System.out.print("Votre grille :");
 		afficherGrille(grilleJoueurV);
 		tourJoueur(grilleIAV, sc, IA, grilleIA, bateauxIA);
@@ -376,7 +384,28 @@ public class BatailleNavale {
 	{
 		boolean[] etat = {true,false};
 		int i = 1;
-		int j = 0;
+		boolean caseVide = false;
+		for(int z = 0; z<grilleJoueurV.lentgh - x; z++)
+		{
+			if(grilleJoueurV[x - z] == 0)
+				caseVide = true;
+		}
+		for(int z = 0; z<grilleJoueurV.lentgh; z++)
+		{
+			if(grilleJoueurV == 0)
+				caseVide = true;
+		}
+		if(grilleJoueurV[x-1][y] !=0 && grilleJoueurV[x+1][y] !=0 && grilleJoueurV[x][y-1] !=0 && grilleJoueurV[x][y+1] !=0)
+		{
+			if(grilleJoueurV[x-1][y] == 2)
+				recherche(x-1, y, 1, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+			else if(grilleJoueurV[x+1][y] ==2)
+				recherche(x+1, y, 2, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+			else if(grilleJoueurV[x][y-1] ==2)
+				recherche(x, y-1, 3, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+			else
+				recherche(x, y+1, 4, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+		}
 		if(direction == 1)
 		{
 			while(!etat[1] && etat[0] && grilleJoueurV[x-i][y] == 0)
@@ -384,10 +413,17 @@ public class BatailleNavale {
 				etat = bombe(x-i, y, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
 				i++;
 			}
-			while(!etat[1])
+			if(!etat[1] && grilleJoueurV[x+1][y] == 0)
 			{
-				etat = recherche(x, y, 2 + j, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-				j++;
+				etat = recherche(x, y, 2, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+			}
+			else if (!etat[1] && grilleJoueurV[x][y-1] == 0)
+			{
+				etat = recherche(x, y, 3, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+			}
+			else if (!etat[1] && grilleJoueurV[x][y+1] == 0)
+			{
+				etat = recherche(x, y, 4, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
 			}
 		}
 		else if(direction == 2)
@@ -397,14 +433,17 @@ public class BatailleNavale {
 				etat = bombe(x+i, y, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
 				i++;
 			}
-			while(!etat[1] && j<=1)
-			{
-				etat = recherche(x, y, 3 + j, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-				j++;
-			}
-			if(!etat[1])
+			if(!etat[1] && grilleJoueurV[x-1][y] == 0)
 			{
 				etat = recherche(x, y, 1, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+			}
+			else if (!etat[1] && grilleJoueurV[x][y-1] == 0)
+			{
+				etat = recherche(x, y, 3, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+			}
+			else if (!etat[1] && grilleJoueurV[x][y+1] == 0)
+			{
+				etat = recherche(x, y, 4, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
 			}
 		}
 		else if(direction == 3)
@@ -414,14 +453,17 @@ public class BatailleNavale {
 				etat = bombe(x, y-i, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
 				i++;
 			}
-			if(!etat[1])
+			if(!etat[1] && grilleJoueurV[x][y+1] == 0)
 			{
 				etat = recherche(x, y, 4, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
 			}
-			while(!etat[1])
+			else if (!etat[1] && grilleJoueurV[x-1][y] == 0)
 			{
-				etat = recherche(x, y, 1+j, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-				j++;
+				etat = recherche(x, y, 1, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+			}
+			else if (!etat[1] && grilleJoueurV[x+1][y] == 0)
+			{
+				etat = recherche(x, y, 2, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
 			}
 		}
 		else
@@ -431,10 +473,17 @@ public class BatailleNavale {
 				etat = bombe(x, y+i, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
 				i++;
 			}
-			while(!etat[1])
+			if(!etat[1] && grilleJoueurV[x][y-1] == 0)
 			{
-				etat = recherche(x, y, 1+j, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-				j++;
+				etat = recherche(x, y, 3, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+			}
+			else if (!etat[1] && grilleJoueurV[x-1][y] == 0)
+			{
+				etat = recherche(x, y, 1, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+			}
+			else if (!etat[1] && grilleJoueurV[x+1][y] == 0)
+			{
+				etat = recherche(x, y, 2, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
 			}
 		}
 		return etat;
