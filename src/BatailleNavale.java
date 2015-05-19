@@ -53,18 +53,32 @@ public class BatailleNavale {
 			int y = 0;
 			do
 			{
-				while(grilleJoueurV[x][y] != 0)
+				boolean aTrouve = false;
+				int count = 1;
+				while((!aTrouve && count != 300) && (joueur.getLife() != 0 && IA.getLife() != 0))
+				{
+					int g = (int)(Math.random()*12);
+					int h = (int)(Math.random()*12);
+					if(grilleJoueurV[g][h] == 2 && joueur.getLife() != 0 && IA.getLife() != 0)
+					{
+						boolean[] etatTemp = recherche(g, h, (int)((Math.random()*4)+1), grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+						if(!etatTemp[0] && !etatTemp[1])
+							grilleJoueurV[g][h] = 3;
+					}
+					count++;
+				}
+				while(grilleJoueurV[x][y] != 0 && joueur.getLife() != 0 && IA.getLife() != 0)
 				{
 					x = (int)(Math.random()*12);
 					y = (int)(Math.random()*12);
 				}
 				boolean[] etat = bombe(x, y, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-				if (etat[0] && !etat[1])
+				if (etat[0] && !etat[1] && joueur.getLife() != 0 && IA.getLife() != 0)
 				{
 					recherche(x, y, (int)((Math.random()*4)+1), grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
 				}
 			}
-			while(grilleJoueur[x-1][y-1] == 0 || grilleJoueur[x-1][y-1] == 1);
+			while((grilleJoueur[x-1][y-1] == 0 || grilleJoueur[x-1][y-1] == 1 ) && joueur.getLife() != 0 && IA.getLife() != 0);
 		}
 		if(joueur.getLife() == 0)
 			System.out.println("Vous avez perdu.");
@@ -375,9 +389,20 @@ public class BatailleNavale {
 					grilleJoueurV[i][j] = 1;
 			}
 		}
-		System.out.print("Votre grille :");
-		afficherGrille(grilleJoueurV);
-		tourJoueur(grilleIAV, sc, IA, grilleIA, bateauxIA);
+		
+		// ---
+		
+		if(joueur.getLife() != 0 && IA.getLife() != 0)
+		{
+			System.out.print("Votre grille :");
+			afficherGrille(grilleJoueurV);
+			afficherGrilleDev(grilleJoueurV);
+			
+			// ---
+			
+			
+			tourJoueur(grilleIAV, sc, IA, grilleIA, bateauxIA);
+		}
 		return etat;
 	}
 	public static boolean[] recherche(int x, int y, int direction, int[][] grilleJoueur, int[][] grilleJoueurV, int[][] grilleIAV, Scanner sc, Joueur IA, Joueur joueur, int[][] grilleIA, Bateau[] bateauxIA, Bateau[] bateauxJ)
@@ -385,106 +410,209 @@ public class BatailleNavale {
 		boolean[] etat = {true,false};
 		int i = 1;
 		boolean caseVide = false;
-		for(int z = 0; z<grilleJoueurV.lentgh - x; z++)
+		for(int z = 0; z<grilleJoueurV.length - 1; z++)
 		{
-			if(grilleJoueurV[x - z] == 0)
+			if(grilleJoueurV[z][y] == 0)
 				caseVide = true;
 		}
-		for(int z = 0; z<grilleJoueurV.lentgh; z++)
+		for(int m = 0; m<grilleJoueurV[0].length - 1; m++)
 		{
-			if(grilleJoueurV == 0)
+			if(grilleJoueurV[x][m] == 0)
 				caseVide = true;
 		}
-		if(grilleJoueurV[x-1][y] !=0 && grilleJoueurV[x+1][y] !=0 && grilleJoueurV[x][y-1] !=0 && grilleJoueurV[x][y+1] !=0)
+		if(caseVide && joueur.getLife() != 0 && IA.getLife() != 0)
 		{
-			if(grilleJoueurV[x-1][y] == 2)
-				recherche(x-1, y, 1, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-			else if(grilleJoueurV[x+1][y] ==2)
-				recherche(x+1, y, 2, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-			else if(grilleJoueurV[x][y-1] ==2)
-				recherche(x, y-1, 3, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+			if(grilleJoueurV[x-1][y] !=0 && grilleJoueurV[x+1][y] !=0 && grilleJoueurV[x][y-1] !=0 && grilleJoueurV[x][y+1] !=0)
+			{
+				etat[0] = false;
+				etat[1] = false;
+			}
 			else
-				recherche(x, y+1, 4, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-		}
-		if(direction == 1)
-		{
-			while(!etat[1] && etat[0] && grilleJoueurV[x-i][y] == 0)
 			{
-				etat = bombe(x-i, y, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-				i++;
-			}
-			if(!etat[1] && grilleJoueurV[x+1][y] == 0)
-			{
-				etat = recherche(x, y, 2, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-			}
-			else if (!etat[1] && grilleJoueurV[x][y-1] == 0)
-			{
-				etat = recherche(x, y, 3, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-			}
-			else if (!etat[1] && grilleJoueurV[x][y+1] == 0)
-			{
-				etat = recherche(x, y, 4, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-			}
-		}
-		else if(direction == 2)
-		{
-			while(!etat[1] && etat[0] && grilleJoueurV[x+i][y] == 0)
-			{
-				etat = bombe(x+i, y, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-				i++;
-			}
-			if(!etat[1] && grilleJoueurV[x-1][y] == 0)
-			{
-				etat = recherche(x, y, 1, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-			}
-			else if (!etat[1] && grilleJoueurV[x][y-1] == 0)
-			{
-				etat = recherche(x, y, 3, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-			}
-			else if (!etat[1] && grilleJoueurV[x][y+1] == 0)
-			{
-				etat = recherche(x, y, 4, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-			}
-		}
-		else if(direction == 3)
-		{
-			while(!etat[1] && etat[0] && grilleJoueurV[x][y-i] == 0)
-			{
-				etat = bombe(x, y-i, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-				i++;
-			}
-			if(!etat[1] && grilleJoueurV[x][y+1] == 0)
-			{
-				etat = recherche(x, y, 4, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-			}
-			else if (!etat[1] && grilleJoueurV[x-1][y] == 0)
-			{
-				etat = recherche(x, y, 1, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-			}
-			else if (!etat[1] && grilleJoueurV[x+1][y] == 0)
-			{
-				etat = recherche(x, y, 2, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+				if(direction == 1)
+				{
+					while(!etat[1] && etat[0] && grilleJoueurV[x-i][y] == 0)
+					{
+						etat = bombe(x-i, y, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+						i++;
+						if(etat[1])
+						{
+							for(int w = 0; w<3; w++)
+							{
+								if(grilleJoueurV[x-(i-1)][y] == 2)
+									grilleJoueurV[x-(i-1)][y] = 3;
+								i--;
+							}
+							for(int w = 0; w<3; w++)
+							{
+								if(grilleJoueurV[x-(i-1)][y] == 2)
+									grilleJoueurV[x-(i-1)][y] = 3;
+								i--;
+								boolean aTrouve = false;
+								int count = 1;
+								while((!aTrouve && count != 300) && (joueur.getLife() != 0 && IA.getLife() != 0))
+								{
+									int g = (int)(Math.random()*12);
+									int h = (int)(Math.random()*12);
+									if(grilleJoueurV[g][h] == 2 && joueur.getLife() != 0 && IA.getLife() != 0)
+									{
+										etat = recherche(g, h, (int)((Math.random()*4)+1), grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+										if(!etat[0] && !etat[1])
+											grilleJoueurV[g][h] = 3;
+									}
+									count++;
+								}
+							}
+						}
+					}
+					if(!etat[1] && grilleJoueurV[x+1][y] == 0)
+					{
+						etat = recherche(x, y, 2, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+					}
+					else if (!etat[1] && grilleJoueurV[x][y-1] == 0)
+					{
+						etat = recherche(x, y, 3, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+					}
+					else if (!etat[1] && grilleJoueurV[x][y+1] == 0)
+					{
+						etat = recherche(x, y, 4, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+					}					
+				}
+				else if(direction == 2)
+				{
+					while(!etat[1] && etat[0] && grilleJoueurV[x+i][y] == 0)
+					{
+						etat = bombe(x+i, y, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+						i++;
+						if(etat[1])
+						{
+							for(int w = 0; w<3; w++)
+							{
+								if(grilleJoueurV[x+(i-1)][y] == 2)
+									grilleJoueurV[x+(i-1)][y] = 3;
+								i--;
+							}
+							boolean aTrouve = false;
+							int count = 1;
+							while((!aTrouve && count != 300) && (joueur.getLife() != 0 && IA.getLife() != 0))
+							{
+								int g = (int)(Math.random()*12);
+								int h = (int)(Math.random()*12);
+								if(grilleJoueurV[g][h] == 2 && joueur.getLife() != 0 && IA.getLife() != 0)
+								{
+									etat = recherche(g, h, (int)((Math.random()*4)+1), grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+									if(!etat[0] && !etat[1])
+										grilleJoueurV[g][h] = 3;
+								}
+								count++;
+							}
+						}
+					}
+					if(!etat[1] && grilleJoueurV[x-1][y] == 0)
+					{
+						etat = recherche(x, y, 1, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+					}
+					else if (!etat[1] && grilleJoueurV[x][y-1] == 0)
+					{
+						etat = recherche(x, y, 3, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+					}
+					else if (!etat[1] && grilleJoueurV[x][y+1] == 0)
+					{
+						etat = recherche(x, y, 4, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+					}
+				}
+				else if(direction == 3)
+				{
+					while(!etat[1] && etat[0] && grilleJoueurV[x][y-i] == 0)
+					{
+						etat = bombe(x, y-i, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+						i++;
+						if(etat[1])
+						{
+							for(int w = 0; w<3; w++)
+							{
+								if(grilleJoueurV[x][y-(i-1)] == 2)
+									grilleJoueurV[x][y-(i-1)] = 3;
+								i--;
+							}
+							boolean aTrouve = false;
+							int count = 1;
+							while((!aTrouve && count != 300) && (joueur.getLife() != 0 && IA.getLife() != 0))
+							{
+								int g = (int)(Math.random()*12);
+								int h = (int)(Math.random()*12);
+								if(grilleJoueurV[g][h] == 2 && joueur.getLife() != 0 && IA.getLife() != 0)
+								{
+									etat = recherche(g, h, (int)((Math.random()*4)+1), grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+									if(!etat[0] && !etat[1])
+										grilleJoueurV[g][h] = 3;
+								}
+								count++;
+							}
+						}
+					}
+					if(!etat[1] && grilleJoueurV[x][y+1] == 0)
+					{
+						etat = recherche(x, y, 4, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+					}
+					else if (!etat[1] && grilleJoueurV[x-1][y] == 0)
+					{
+						etat = recherche(x, y, 1, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+					}
+					else if (!etat[1] && grilleJoueurV[x+1][y] == 0)
+					{
+						etat = recherche(x, y, 2, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+					}
+				}
+				else
+				{
+					while(!etat[1] && etat[0] && grilleJoueurV[x][y+i] == 0)
+					{
+						etat = bombe(x, y+i, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+						i++;
+						if(etat[1])
+						{
+							for(int w = 0; w<3; w++)
+							{
+								if(grilleJoueurV[x][y+(i-1)] == 2)
+									grilleJoueurV[x][y+(i-1)] = 3;
+								i--;
+							}
+							boolean aTrouve = false;
+							int count = 1;
+							while((!aTrouve && count != 300) && (joueur.getLife() != 0 && IA.getLife() != 0))
+							{
+								int g = (int)(Math.random()*12);
+								int h = (int)(Math.random()*12);
+								if(grilleJoueurV[g][h] == 2 && joueur.getLife() != 0 && IA.getLife() != 0)
+								{
+									etat = recherche(g, h, (int)((Math.random()*4)+1), grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+									if(!etat[0] && !etat[1])
+										grilleJoueurV[g][h] = 3;
+								}
+								count++;
+							}
+						}
+					}
+					if(!etat[1] && grilleJoueurV[x][y-1] == 0)
+					{
+						etat = recherche(x, y, 3, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+					}
+					else if (!etat[1] && grilleJoueurV[x-1][y] == 0)
+					{
+						etat = recherche(x, y, 1, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+					}
+					else if (!etat[1] && grilleJoueurV[x+1][y] == 0)
+					{
+						etat = recherche(x, y, 2, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
+					}
+				}
 			}
 		}
 		else
 		{
-			while(!etat[1] && etat[0] && grilleJoueurV[x][y+i] == 0)
-			{
-				etat = bombe(x, y+i, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-				i++;
-			}
-			if(!etat[1] && grilleJoueurV[x][y-1] == 0)
-			{
-				etat = recherche(x, y, 3, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-			}
-			else if (!etat[1] && grilleJoueurV[x-1][y] == 0)
-			{
-				etat = recherche(x, y, 1, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-			}
-			else if (!etat[1] && grilleJoueurV[x+1][y] == 0)
-			{
-				etat = recherche(x, y, 2, grilleJoueur, grilleJoueurV, grilleIAV, sc, IA, joueur, grilleIA, bateauxIA, bateauxJ);
-			}
+			etat[0] = false;
+			etat[1] = false;
 		}
 		return etat;
 	}
