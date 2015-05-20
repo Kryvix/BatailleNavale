@@ -41,7 +41,7 @@ public class BatailleNavale {
 		// Positionnement des bateaux :
 		positionner(bateauxJ, grilleJoueur);
 		positionnerIA(bateauxIA, grilleIA);
-		afficherGrilleDev(grilleIA);
+		//afficherGrilleDev(grilleIA);
 		Joueur joueur = new Joueur();
 		Joueur IA = new Joueur();
 		Scanner sc = new Scanner(System.in);
@@ -349,7 +349,6 @@ public class BatailleNavale {
 			{
 				System.out.println("Coule !");
 				IA.enleverVie();
-				System.out.println(IA.getLife());
 			}
 			else
 				System.out.println("Touche !");
@@ -359,46 +358,48 @@ public class BatailleNavale {
 	public static boolean[] bombe(int x, int y, int[][] grilleJoueur, int[][] grilleJoueurV, int[][] grilleIAV, Scanner sc, Joueur IA, Joueur joueur, int[][] grilleIA, Bateau[] bateauxIA, Bateau[] bateauxJ)
 	{
 		boolean[] etat = {false,false};
-		
-		if(grilleJoueur[x-1][y-1] == 0)
-		{
-			System.out.println("L'ordinateur n'a rien touché !");
-			grilleJoueurV[x][y] = 1;
-		}
-		else
-		{
-			etat[0] = true;
-			etat[1] = bateauxJ[grilleJoueur[x-1][y-1]-1].destroyCell(x-1,y-1);
-			if(etat[1])
+		if(joueur.getLife() != 0 && IA.getLife() != 0)
+		{			
+			if(grilleJoueur[x-1][y-1] == 0)
 			{
-				System.out.println("L'ordinateur a coulé votre "+bateauxJ[grilleJoueur[x-1][y-1]-1].getName()+" !");
-				joueur.enleverVie();
+				System.out.println("L'ordinateur n'a rien touché !");
+				grilleJoueurV[x][y] = 1;
 			}
 			else
 			{
-				System.out.println("L'ordinateur a touché votre "+bateauxJ[grilleJoueur[x-1][y-1]-1].getName()+" !");
+				etat[0] = true;
+				etat[1] = bateauxJ[grilleJoueur[x-1][y-1]-1].destroyCell(x-1,y-1);
+				if(etat[1])
+				{
+					System.out.println("L'ordinateur a coulé votre "+bateauxJ[grilleJoueur[x-1][y-1]-1].getName()+" !");
+					joueur.enleverVie();
+				}
+				else
+				{
+					System.out.println("L'ordinateur a touché votre "+bateauxJ[grilleJoueur[x-1][y-1]-1].getName()+" !");
+				}
+				grilleJoueurV[x][y] = 2;
 			}
-			grilleJoueurV[x][y] = 2;
-		}
-		for(int i = 1; i < grilleJoueurV.length-1; i++)
-		{
-			for(int j = 1; j < grilleJoueurV[0].length-1; j++)
+			for(int i = 1; i < grilleJoueurV.length-1; i++)
 			{
-				if(grilleJoueurV[i-1][j] == 1 && grilleJoueurV[i+1][j] == 1 && grilleJoueurV[i][j-1] == 1 && grilleJoueurV[i][j+1] == 1)
-					grilleJoueurV[i][j] = 1;
+				for(int j = 1; j < grilleJoueurV[0].length-1; j++)
+				{
+					if(grilleJoueurV[i-1][j] == 1 && grilleJoueurV[i+1][j] == 1 && grilleJoueurV[i][j-1] == 1 && grilleJoueurV[i][j+1] == 1)
+						grilleJoueurV[i][j] = 1;
+				}
 			}
-		}
-		
-		
-		
-		if(joueur.getLife() != 0 && IA.getLife() != 0)
-		{
-			/*
-			System.out.print("Votre grille :");
-			afficherGrille(grilleJoueurV);
-			afficherGrilleDev(grilleJoueurV);
-			 */
-			tourJoueur(grilleIAV, sc, IA, grilleIA, bateauxIA);
+			
+			
+			
+			if(joueur.getLife() != 0 && IA.getLife() != 0)
+			{
+				/*
+				System.out.print("Votre grille :");
+				afficherGrille(grilleJoueurV);
+				afficherGrilleDev(grilleJoueurV);
+				 */
+				tourJoueur(grilleIAV, sc, IA, grilleIA, bateauxIA);
+			}
 		}
 		return etat;
 	}
