@@ -4,8 +4,8 @@ import java.util.Scanner;
  * La classe principale du jeu.
  * @author Julien EMMANUEL, Charlotte RICHAD, Thomas DUTOUR, Alexis SAGET
  */
-public class BatailleNavale {
-	
+public class BatailleNavaleTest {
+	private static Fenetre fen = new Fenetre();
 	public static void main(String[] args) 
 	{
 		// Grille du joueur :
@@ -24,6 +24,7 @@ public class BatailleNavale {
 		int[][] grilleIA = new int[10][10];
 		// Grille de l'IA visible par le joueur :
 		int[][] grilleIAV = new int[10][10];
+		fen.setGrid(grilleIAV);
 		// Création des bateaux du joueur :
 		Bateau[] bateauxJ = new Bateau[5];
 		bateauxJ[0] = new Bateau("Porte-avions",5);
@@ -319,6 +320,7 @@ public class BatailleNavale {
 	 */
 	 public static void tourJoueur(int[][] grilleIAV, Scanner sc, Joueur IA, int[][] grilleIA, Bateau[] bateauxIA)
 	 {
+		fen.setGrid(grilleIAV);
 		System.out.print("Grille adverse :");
 		afficherGrille(grilleIAV);
 		System.out.println("Ligne de la case a viser :");
