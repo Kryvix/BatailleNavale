@@ -92,7 +92,6 @@ public class BatailleNavale {
 	 */
 	public static void positionner(Bateau[] bateauxJ, int[][] grilleJoueur)
 	{
-		bateauxJ[0].position(1,3,true);
 		Scanner sc = new Scanner(System.in);
 		afficherGrilleDev(grilleJoueur);
 		for(int i = 0; i<5; i++)

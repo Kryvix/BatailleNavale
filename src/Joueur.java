@@ -8,7 +8,7 @@ public class Joueur {
 	 * Ce constructeur instancie un joueur.
 	 */
 	public Joueur() {
-		this.bateauxRestants = 5;
+		this.bateauxRestants = 1;
 	}
 	public int getLife()
 	{

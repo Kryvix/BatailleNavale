@@ -5,8 +5,9 @@ import java.util.Scanner;
  * @author Julien EMMANUEL, Charlotte RICHAD, Thomas DUTOUR, Alexis SAGET
  */
 public class BatailleNavaleTest {
-	private static Fenetre fen = new Fenetre();
-	public static void main(String[] args) 
+	private static Fenetre fen = new Fenetre("Grille adverse", true);
+	private static Fenetre fen2 = new Fenetre("Votre grille", false);
+	public static void main(String[] args)
 	{
 		// Grille du joueur :
 		int[][] grilleJoueur = new int[10][10];
@@ -46,7 +47,6 @@ public class BatailleNavaleTest {
 		Joueur joueur = new Joueur();
 		Joueur IA = new Joueur();
 		Scanner sc = new Scanner(System.in);
-		afficherGrilleDev(grilleJoueur);
 		tourJoueur(grilleIAV, sc, IA, grilleIA, bateauxIA);
 		while(joueur.getLife() != 0 && IA.getLife() != 0)
 		{
@@ -81,6 +81,7 @@ public class BatailleNavaleTest {
 			}
 			while((grilleJoueur[x-1][y-1] == 0 || grilleJoueur[x-1][y-1] == 1 ) && joueur.getLife() != 0 && IA.getLife() != 0);
 		}
+		fen.setGrid(grilleIAV);
 		if(joueur.getLife() == 0)
 			System.out.println("Vous avez perdu.");
 		else
@@ -93,9 +94,7 @@ public class BatailleNavaleTest {
 	 */
 	public static void positionner(Bateau[] bateauxJ, int[][] grilleJoueur)
 	{
-		bateauxJ[0].position(1,3,true);
 		Scanner sc = new Scanner(System.in);
-		afficherGrilleDev(grilleJoueur);
 		for(int i = 0; i<5; i++)
 		{
 			boolean dansLaGrille = false;
@@ -175,7 +174,7 @@ public class BatailleNavaleTest {
 				}
 				grilleJoueur[x][y] = i+1;
 			}
-			afficherGrilleDev(grilleJoueur);
+			fen2.setGrid(grilleJoueur);
 		}
 	}
 	/**
@@ -275,54 +274,11 @@ public class BatailleNavaleTest {
 		return nombreValide;
 	}
 	/**
-	 * Affiche une grille entrée en paramètre (utile seulement pendant la phase de développement pour effectuer des tests).
-	 * @param grille La grille à afficher
-	 */
-	public static void afficherGrilleDev(int[][] grille)
-	{
-		System.out.println();
-		for(int i = 0; i < grille.length; i++)
-		{
-			for(int j = 0; j < grille[0].length; j++)
-			{
-				System.out.print("|");
-				System.out.print(grille[j][i]);
-			}
-			System.out.print("|");
-			System.out.println();
-		}
-	}
-	/**
-	 * Affiche une grille entrée en paramètre.
-	 * @param grille La grille à afficher
-	 */
-	public static void afficherGrille(int[][] grille)
-	{
-		System.out.println();
-		for(int i = 0; i < grille.length; i++)
-		{
-			for(int j = 0; j < grille[0].length; j++)
-			{
-				System.out.print("|");
-				if(grille[j][i] == 0)
-					System.out.print(" ");
-				else if(grille[j][i] == 1)
-					System.out.print("~");
-				else
-					System.out.print("*");
-			}
-			System.out.print("|");
-			System.out.println();
-		}
-	}
-	/**
 	 * Effectue un tour du joueur
 	 */
 	 public static void tourJoueur(int[][] grilleIAV, Scanner sc, Joueur IA, int[][] grilleIA, Bateau[] bateauxIA)
 	 {
 		fen.setGrid(grilleIAV);
-		System.out.print("Grille adverse :");
-		afficherGrille(grilleIAV);
 		System.out.println("Ligne de la case a viser :");
 		String ligneString = sc.nextLine();
 		while(!verifierNombre(ligneString))
@@ -381,6 +337,8 @@ public class BatailleNavaleTest {
 					System.out.println("L'ordinateur a touché votre "+bateauxJ[grilleJoueur[x-1][y-1]-1].getName()+" !");
 				}
 				grilleJoueurV[x][y] = 2;
+				grilleJoueur[x-1][y-1] = 6;
+				fen2.setGrid(grilleJoueur);
 			}
 			for(int i = 1; i < grilleJoueurV.length-1; i++)
 			{
