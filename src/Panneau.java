@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 public class Panneau extends JPanel { 
 	
 	private int[][] grille = new int[10][10];
+	private boolean gagne = false;
+	private boolean perdu = false;
 	
 	public void paintComponent(Graphics g){
 		try 
@@ -16,6 +18,8 @@ public class Panneau extends JPanel {
 			img[0] = ImageIO.read(new File("case0.png"));
 			img[1] = ImageIO.read(new File("case1.png"));
 			img[2] = ImageIO.read(new File("case2.png"));
+			Image IMGgagne = ImageIO.read(new File("gagne.png"));
+			Image IMGperdu = ImageIO.read(new File("perdu.png"));
 	      
 			for(int i = 0; i < grille.length; i++)
 			{
@@ -25,8 +29,16 @@ public class Panneau extends JPanel {
 				}
 			}
 			
-			//Pour une image de fond
-			//g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
+			if(gagne)
+			{
+				g.drawImage(IMGgagne, 0, 0, this);
+			}
+			
+			if(perdu)
+			{
+				g.drawImage(IMGperdu, 0, 0, this);
+			}
+			
 		} 
 		catch (IOException e) 
 		{
@@ -43,5 +55,13 @@ public class Panneau extends JPanel {
 				this.grille[i][j] = grille[i][j];
 			}
 		}
+	}
+	public void setGagne()
+	{
+		this.gagne = true;
+	}
+	public void setPerdu()
+	{
+		this.perdu = true;
 	}
 }

@@ -83,9 +83,17 @@ public class BatailleNavaleTest {
 		}
 		fen.setGrid(grilleIAV);
 		if(joueur.getLife() == 0)
+		{
+			fen.setPerdu();
+			fen2.setPerdu();
 			System.out.println("Vous avez perdu.");
+		}
 		else
+		{
+			fen.setGagne();
+			fen2.setGagne();
 			System.out.println("Vous avez gagné ! Bravo !");
+		}
 	}
 	/**
 	 * Demande à l'utilisateur la position de ses bateaux et les ajoute à sa grille.

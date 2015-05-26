@@ -37,4 +37,18 @@ public class Fenetre extends JFrame {
 			pan2.repaint(); 
 		}
 	}
+	public void setGagne()
+	{
+		pan.setGagne();
+		pan2.setGagne();
+		pan.repaint(); 
+		pan2.repaint(); 
+	}
+	public void setPerdu()
+	{
+		pan.setPerdu();
+		pan2.setPerdu();
+		pan.repaint(); 
+		pan2.repaint(); 
+	}
 }
