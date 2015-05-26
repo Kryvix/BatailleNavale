@@ -4,7 +4,7 @@ import java.util.Scanner;
  * La classe principale du jeu.
  * @author Julien EMMANUEL, Charlotte RICHAD, Thomas DUTOUR, Alexis SAGET
  */
-public class BatailleNavaleTest {
+public class BatailleNavaleGraphique {
 	private static Fenetre fen = new Fenetre("Grille adverse", true);
 	private static Fenetre fen2 = new Fenetre("Votre grille", false);
 	public static void main(String[] args)
