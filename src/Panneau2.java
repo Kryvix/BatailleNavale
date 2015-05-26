@@ -22,11 +22,11 @@ public class Panneau2 extends JPanel {
 				for(int j = 0; j < grille[0].length; j++)
 				{
 					if(grille[i][j] == 0)
-						g.drawImage(img[0], 25*i, 25*j, this);
+						g.drawImage(img[0], 32*i, 32*j, this);
 					else if(grille[i][j] < 6)
-						g.drawImage(img[1], 25*i, 25*j, this);
+						g.drawImage(img[1], 32*i, 32*j, this);
 					else
-						g.drawImage(img[2], 25*i, 25*j, this);
+						g.drawImage(img[2], 32*i, 32*j, this);
 				}
 			}
 			

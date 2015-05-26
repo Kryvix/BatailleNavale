@@ -10,11 +10,11 @@ public class Fenetre extends JFrame {
 	{
 		this.IA = IA;
 		this.setTitle(nom);
-		this.setSize(256,278);
+		this.setSize(326,348);
 		if(IA)
 			this.setLocation(0, 0);
 		else
-			this.setLocation(300, 0);
+			this.setLocation(350, 0);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);         
 		this.setAlwaysOnTop(true);
 		this.setResizable(false); 

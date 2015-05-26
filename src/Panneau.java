@@ -21,7 +21,7 @@ public class Panneau extends JPanel {
 			{
 				for(int j = 0; j < grille[0].length; j++)
 				{
-					g.drawImage(img[grille[i][j]], 25*i, 25*j, this);
+					g.drawImage(img[grille[i][j]], 32*i, 32*j, this);
 				}
 			}
 			
