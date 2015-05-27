@@ -15,22 +15,29 @@ public class Panneau2 extends JPanel {
 		try 
 		{
 			Image[] img = new Image[3];
-			img[0] = ImageIO.read(new File("case0.png"));
-			img[1] = ImageIO.read(new File("bateau.png"));
-			img[2] = ImageIO.read(new File("case2.png"));
-			Image IMGgagne = ImageIO.read(new File("gagne.png"));
-			Image IMGperdu = ImageIO.read(new File("perdu.png"));
-	      
+			for(int y = 0; y<3; y++)
+				img[y] = ImageIO.read(new File("Images/case"+y+".png"));
+			Image IMGgagne = ImageIO.read(new File("Images/gagne.png"));
+			Image IMGperdu = ImageIO.read(new File("Images/perdu.png"));
+			
+			Image[] numerotation = new Image[11];
+			for(int n = 0; n<11; n++)
+				numerotation[n] = ImageIO.read(new File("Images/"+n+".png"));
+			for(int z = 0; z <= grille.length; z++)
+				g.drawImage(numerotation[z], 32*z, 0, this);
+			for(int p = 1; p <= grille[0].length; p++)
+				g.drawImage(numerotation[p], 0, 32*p, this);
+			
 			for(int i = 0; i < grille.length; i++)
 			{
 				for(int j = 0; j < grille[0].length; j++)
 				{
 					if(grille[i][j] == 0)
-						g.drawImage(img[0], 32*i, 32*j, this);
+						g.drawImage(img[0], 32*i+32, 32*j+32, this);
 					else if(grille[i][j] < 6)
-						g.drawImage(img[1], 32*i, 32*j, this);
+						g.drawImage(img[1], 32*i+32, 32*j+32, this);
 					else
-						g.drawImage(img[2], 32*i, 32*j, this);
+						g.drawImage(img[2], 32*i+32, 32*j+32, this);
 				}
 			}
 			if(gagne)

@@ -10,7 +10,7 @@ public class Fenetre extends JFrame {
 	{
 		this.IA = IA;
 		this.setTitle(nom);
-		this.setSize(326,348);
+		this.setSize(358,380);
 		if(IA)
 			this.setLocation(0, 0);
 		else
