@@ -14,9 +14,9 @@ public class Fenetre extends JFrame {
 		if(IA)
 			this.setLocation(0, 0);
 		else
-			this.setLocation(350, 0);
+			this.setLocation(360, 0);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);         
-		this.setAlwaysOnTop(true);
+		this.setAlwaysOnTop(false);
 		this.setResizable(false); 
 		if(IA)
 			this.setContentPane(pan);

@@ -15,8 +15,9 @@ public class Panneau2 extends JPanel {
 		try 
 		{
 			Image[] img = new Image[3];
-			for(int y = 0; y<3; y++)
-				img[y] = ImageIO.read(new File("Images/case"+y+".png"));
+			img[0] = ImageIO.read(new File("Images/case0.png"));
+			img[1] = ImageIO.read(new File("Images/bateau.png"));
+			img[2] = ImageIO.read(new File("Images/case2.png"));
 			Image IMGgagne = ImageIO.read(new File("Images/gagne.png"));
 			Image IMGperdu = ImageIO.read(new File("Images/perdu.png"));
 			
