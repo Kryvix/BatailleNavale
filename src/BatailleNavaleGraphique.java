@@ -1,5 +1,8 @@
 import java.util.Scanner;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
 /**
  * La classe principale du jeu.
  * @author Julien EMMANUEL, Charlotte RICHAD, Thomas DUTOUR, Alexis SAGET
@@ -7,7 +10,7 @@ import java.util.Scanner;
 public class BatailleNavaleGraphique {
 	private static Fenetre fen = new Fenetre("Grille adverse (Zaya)", true);
 	private static Fenetre fen2 = new Fenetre("Votre grille", false);
-	public static void main(String[] args)
+	public static void main(String[] args) throws AddressException, MessagingException
 	{
 		// Grille du joueur :
 		int[][] grilleJoueur = new int[10][10];
@@ -87,12 +90,14 @@ public class BatailleNavaleGraphique {
 			fen.setPerdu();
 			fen2.setPerdu();
 			System.out.println("Vous avez perdu.");
+			Email mail = new Email(true);
 		}
 		else
 		{
 			fen.setGagne();
 			fen2.setGagne();
 			System.out.println("Vous avez gagné ! Bravo !");
+			Email mail = new Email(false);
 		}
 	}
 	/**
@@ -114,24 +119,36 @@ public class BatailleNavaleGraphique {
 				casePrise = false;
 				System.out.println("Ligne du "+bateauxJ[i].getName()+" :");
 				String ligneString = sc.nextLine();
+				while(ligneString.length()==0)
+					ligneString = sc.nextLine();
 				while(!verifierNombre(ligneString))
 				{
 					System.out.println("Veuillez entrer un nombre entre 1 et 10 :");
 					ligneString = sc.nextLine();
+					while(ligneString.length()==0)
+						ligneString = sc.nextLine();
 				}
 				System.out.println("Colonne du "+bateauxJ[i].getName()+" :");
 				String colonneString = sc.nextLine();
+				while(colonneString.length()==0)
+					colonneString = sc.nextLine();
 				while(!verifierNombre(colonneString))
 				{
 					System.out.println("Veuillez entrer un nombre entre 1 et 10 :");
 					colonneString = sc.nextLine();
+					while(colonneString.length()==0)
+						colonneString = sc.nextLine();
 				}
 				System.out.println("Le "+bateauxJ[i].getName()+" doit il être vertical ou horizontal (horizontal = 0, vertical = 1) :");
 				String verticalString = sc.nextLine();
+				while(verticalString.length()==0)
+					verticalString = sc.nextLine();
 				while(verticalString.charAt(0) != '0' && verticalString.charAt(0) != '1')
 				{
 					System.out.println("Veuillez entrer 0 ou 1 :");
 					verticalString = sc.nextLine();
+					while(verticalString.length()==0)
+						verticalString = sc.nextLine();
 				}
 				boolean vertical = true;
 				if(verticalString.charAt(0) == '0')
@@ -289,17 +306,25 @@ public class BatailleNavaleGraphique {
 		fen.setGrid(grilleZayaV);
 		System.out.println("Ligne de la case a viser :");
 		String ligneString = sc.nextLine();
+		while(ligneString.length()==0)
+			ligneString = sc.nextLine();
 		while(!verifierNombre(ligneString))
 		{
 			System.out.println("Veuillez entrer un nombre entre 1 et 10 :");
 			ligneString = sc.nextLine();
+			while(ligneString.length()==0)
+				ligneString = sc.nextLine();
 		}
 		System.out.println("Colonne de la case a viser :");
 		String colonneString = sc.nextLine();
+		while(colonneString.length()==0)
+			colonneString = sc.nextLine();
 		while(!verifierNombre(colonneString))
 		{
 			System.out.println("Veuillez entrer un nombre entre 1 et 10 :");
 			colonneString = sc.nextLine();
+			while(colonneString.length()==0)
+				colonneString = sc.nextLine();
 		}
 		int positionX = Integer.parseInt(colonneString) - 1;
 		int positionY = Integer.parseInt(ligneString) - 1;
@@ -330,6 +355,7 @@ public class BatailleNavaleGraphique {
 			{
 				System.out.println("L'ordinateur n'a rien touché !");
 				grilleJoueurV[x][y] = 1;
+				grilleJoueur[x-1][y-1] = 42;
 			}
 			else
 			{
@@ -346,8 +372,8 @@ public class BatailleNavaleGraphique {
 				}
 				grilleJoueurV[x][y] = 2;
 				grilleJoueur[x-1][y-1] = 6;
-				fen2.setGrid(grilleJoueur);
 			}
+			fen2.setGrid(grilleJoueur);
 			for(int i = 1; i < grilleJoueurV.length-1; i++)
 			{
 				for(int j = 1; j < grilleJoueurV[0].length-1; j++)

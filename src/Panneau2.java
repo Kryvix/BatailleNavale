@@ -14,10 +14,11 @@ public class Panneau2 extends JPanel {
 	public void paintComponent(Graphics g){
 		try 
 		{
-			Image[] img = new Image[3];
+			Image[] img = new Image[4];
 			img[0] = ImageIO.read(new File("Images/case0.png"));
 			img[1] = ImageIO.read(new File("Images/bateau.png"));
 			img[2] = ImageIO.read(new File("Images/case2.png"));
+			img[3] = ImageIO.read(new File("Images/case1.png"));
 			Image IMGgagne = ImageIO.read(new File("Images/gagne.png"));
 			Image IMGperdu = ImageIO.read(new File("Images/perdu.png"));
 			
@@ -37,6 +38,8 @@ public class Panneau2 extends JPanel {
 						g.drawImage(img[0], 32*i+32, 32*j+32, this);
 					else if(grille[i][j] < 6)
 						g.drawImage(img[1], 32*i+32, 32*j+32, this);
+					else if(grille[i][j] == 42)
+						g.drawImage(img[3], 32*i+32, 32*j+32, this);
 					else
 						g.drawImage(img[2], 32*i+32, 32*j+32, this);
 				}
