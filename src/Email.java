@@ -6,19 +6,33 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
- 
+
+/**
+ * Cette classe définit l'objet Email, mais cet objet n'est pas directement, il est juste instancié pour envoyer un mail.
+ * @author Julien EMMANUEL, Charlotte RICHAD, Thomas DUTOUR, Alexis SAGET, Crunchify.com
+ */
 public class Email 
 {
- 
 	static Properties mailServerProperties;
 	static Session getMailSession;
 	static MimeMessage generateMailMessage;
  
+	/**
+	 * Ce constructeur ne définit pas vraiment un objet mais appelle la méthode d'envoi de mail.
+	 * @param gagne Vrai si Zaya a gagné, Faux sinon.
+	 * @throws AddressException
+	 * @throws MessagingException
+	 */
 	public Email(boolean gagne) throws AddressException, MessagingException 
 	{
 		generateAndSendEmail(gagne);
 	}
- 
+	/**
+	 * Envoie un mail pour indiquer l'issue de la partie.
+	 * @param gagne Vrai si Zaya a gagné, Faux sinon.
+	 * @throws AddressException
+	 * @throws MessagingException
+	 */
 	public static void generateAndSendEmail(boolean gagne) throws AddressException, MessagingException 
 	{
 		mailServerProperties = System.getProperties();
