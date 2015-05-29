@@ -37,7 +37,7 @@ public class Email {
 		//System.out.println("\n\n 2nd ===> get Mail Session..");
 		getMailSession = Session.getDefaultInstance(mailServerProperties, null);
 		generateMailMessage = new MimeMessage(getMailSession);
-		generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress("Jemmanuel@insa-lyon.fr"));
+		generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress("Julien.Emmanuel@insa-lyon.fr"));
 		String emailBody;
 		if(gagne)
 		{
