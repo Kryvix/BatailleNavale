@@ -103,7 +103,7 @@ public class Bateau {
 	 * Détruit la case ciblée du bateau.
 	 * @param x La colonne ciblée
 	 * @param y La ligne ciblée
-	 * @return
+	 * @return TRUE si le bateau a été coulé, FALSE sinon.
 	 */
 	public boolean destroyCell(int x, int y)
 	{

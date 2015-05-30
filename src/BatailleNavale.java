@@ -8,10 +8,24 @@ import javax.mail.internet.AddressException;
  * @author Julien EMMANUEL, Charlotte RICHAD, Thomas DUTOUR, Alexis SAGET
  */
 public class BatailleNavale {
-	private static Fenetre fen = new Fenetre("Grille adverse (Zaya)", true);
-	private static Fenetre fen2 = new Fenetre("Votre grille", false);
-	private static Bateau[] bateauxJ = new Bateau[5];
-	private static Bateau[] bateauxZaya = new Bateau[5];
+	static Fenetre fen = new Fenetre("Grille adverse (Zaya)", true);
+	static Fenetre fen2 = new Fenetre("Votre grille", false);
+	static Bateau[] bateauxJ = new Bateau[5];
+	static Bateau[] bateauxZaya = new Bateau[5];
+	static Scanner sc = new Scanner(System.in);
+	static int[][] grilleJoueur = new int[10][10];
+	static int[][] grilleJoueurV = new int[12][12];
+	static int[][] grilleZaya = new int[10][10];
+	static int[][] grilleZayaV = new int[10][10];
+	static Joueur joueur = new Joueur();
+	static Joueur Zaya = new Joueur();
+	
+	/**
+	 * Méthode principale du jeu, qui initialise la partie puis crée des tours de jeu tant qu'il reste des bateaux.
+	 * @param args Paramètre non utilisé.
+	 * @throws AddressException Erreur dans l'envoi d'email.
+	 * @throws MessagingException Erreur dans l'envoi d'email.
+	 */
 	public static void main(String[] args) throws AddressException, MessagingException
 	{
 		String reponse;	
@@ -19,11 +33,9 @@ public class BatailleNavale {
 		fen.reinitAff();
 		fen2.reinitAff();
 		// Grille du joueur :
-		int[][] grilleJoueur = new int[10][10];
 		reinitialiser(grilleJoueur);
 		fen2.setGrid(grilleJoueur);
 		// Grille du joueur visible par Zaya :
-		int[][] grilleJoueurV = new int[12][12];
 		reinitialiser(grilleJoueurV);
 		for(int i=0; i<12; i++)
 			grilleJoueurV[0][i] = 1;
@@ -34,10 +46,8 @@ public class BatailleNavale {
 		for(int i=0; i<12; i++)
 			grilleJoueurV[i][11] = 1;
 		// Grille de Zaya :
-		int[][] grilleZaya = new int[10][10];
 		reinitialiser(grilleZaya);
 		// Grille de Zaya visible par le joueur :
-		int[][] grilleZayaV = new int[10][10];
 		reinitialiser(grilleZayaV);
 		fen.setGrid(grilleZayaV);
 		// Création des bateaux du joueur :
@@ -53,13 +63,11 @@ public class BatailleNavale {
 		bateauxZaya[3] = new Bateau("Sous-marin",3);
 		bateauxZaya[4] = new Bateau("Torpilleur",2);
 		// Positionnement des bateaux :
-		positionner(bateauxJ, grilleJoueur);
-		positionnerZaya(bateauxZaya, grilleZaya);
-		//afficherGrilleDev(grilleZaya);
-		Joueur joueur = new Joueur();
-		Joueur Zaya = new Joueur();
-		Scanner sc = new Scanner(System.in);
-		tourJoueur(grilleZayaV, sc, Zaya, grilleZaya, bateauxZaya);
+		positionner();
+		positionnerZaya();
+		joueur.setLife(5);
+		Zaya.setLife(5);
+		tourJoueur();
 		while(joueur.getLife() != 0 && Zaya.getLife() != 0)
 		{
 			int x = 0;
@@ -74,7 +82,7 @@ public class BatailleNavale {
 					int h = (int)(Math.random()*12);
 					if(grilleJoueurV[g][h] == 2 && joueur.getLife() != 0 && Zaya.getLife() != 0)
 					{
-						boolean[] etatTemp = recherche(g, h, (int)((Math.random()*4)+1), grilleJoueur, grilleJoueurV, grilleZayaV, sc, Zaya, joueur, grilleZaya, bateauxZaya, bateauxJ);
+						boolean[] etatTemp = recherche(g, h, (int)((Math.random()*4)+1));
 						if(!etatTemp[0] && !etatTemp[1])
 							grilleJoueurV[g][h] = 3;
 					}
@@ -85,10 +93,10 @@ public class BatailleNavale {
 					x = (int)(Math.random()*12);
 					y = (int)(Math.random()*12);
 				}
-				boolean[] etat = bombe(x, y, grilleJoueur, grilleJoueurV, grilleZayaV, sc, Zaya, joueur, grilleZaya, bateauxZaya, bateauxJ);
+				boolean[] etat = bombe(x, y);
 				if (etat[0] && !etat[1] && joueur.getLife() != 0 && Zaya.getLife() != 0)
 				{
-					recherche(x, y, (int)((Math.random()*4)+1), grilleJoueur, grilleJoueurV, grilleZayaV, sc, Zaya, joueur, grilleZaya, bateauxZaya, bateauxJ);
+					recherche(x, y, (int)((Math.random()*4)+1));
 				}
 			}
 			while((grilleJoueur[x-1][y-1] == 0 || grilleJoueur[x-1][y-1] == 1 ) && joueur.getLife() != 0 && Zaya.getLife() != 0);
@@ -116,24 +124,20 @@ public class BatailleNavale {
 		String commentaire = sc.nextLine();
 		Email mail = new Email(ZayaGagne, bateauxRestants, commentaire);
 		System.out.println("Voulez-vous commencer une nouvelle partie? oui/non");
-		Scanner chat = new Scanner(System.in);
-		reponse = chat.nextLine();
+		reponse = sc.nextLine();
 		
 		}while(reponse.equals("oui"));
 		
 	fen.dispose();
 	fen2.dispose();
 	System.out.println("Merci d'avoir joué et à bientôt ;) !");
-	
+	sc.close();
 	}
 	/**
 	 * Demande à l'utilisateur la position de ses bateaux et les ajoute à sa grille.
-	 * @param bateauxJ Le tableau des bateaux à positionner.
-	 * @param grilleJoueur La grille dans laquelle les bateaux seront positionnés.
 	 */
-	public static void positionner(Bateau[] bateauxJ, int[][] grilleJoueur)
+	public static void positionner()
 	{
-		Scanner sc = new Scanner(System.in);
 		for(int i = 0; i<5; i++)
 		{
 			boolean dansLaGrille = false;
@@ -230,10 +234,8 @@ public class BatailleNavale {
 	}
 	/**
 	 * Positionne aléatoirement les bateaux de Zaya.
-	 * @param bateauxZaya Le tableau des bateaux à positionner.
-	 * @param grilleZaya La grille dans laquelle les bateaux seront positionnés.
 	 */
-	public static void positionnerZaya(Bateau[] bateauxZaya, int[][] grilleZaya)
+	public static void positionnerZaya()
 	{
 		bateauxZaya[0].position(1,3,true);
 		for(int i = 0; i<5; i++)
@@ -327,7 +329,7 @@ public class BatailleNavale {
 	/**
 	 * Effectue un tour du joueur
 	 */
-	 public static void tourJoueur(int[][] grilleZayaV, Scanner sc, Joueur Zaya, int[][] grilleZaya, Bateau[] bateauxZaya)
+	 public static void tourJoueur()
 	 {
 		fen.setGrid(grilleZayaV);
 		System.out.println("Ligne de la case a viser :");
@@ -378,7 +380,13 @@ public class BatailleNavale {
 			grilleZayaV[positionX][positionY] = 2;
 		}
 	}
-	public static boolean[] bombe(int x, int y, int[][] grilleJoueur, int[][] grilleJoueurV, int[][] grilleZayaV, Scanner sc, Joueur Zaya, Joueur joueur, int[][] grilleZaya, Bateau[] bateauxZaya, Bateau[] bateauxJ)
+	 /**
+	  * Méthode utilisée par Zaya pour tirer sur une case dans la grille du joueur.
+	  * @param x Position horizontale de la case visée.
+	  * @param y Position verticale de la case visée.
+	  * @return Le premier booleen vaut TRUE si la bombe touche un bateau, le deuxième vaut TRUE si la bombe coule un bateau, sinon les booleens valent FALSE.
+	  */
+	public static boolean[] bombe(int x, int y)
 	{
 		boolean[] etat = {false,false};
 		if(joueur.getLife() != 0 && Zaya.getLife() != 0)
@@ -419,12 +427,19 @@ public class BatailleNavale {
 			
 			if(joueur.getLife() != 0 && Zaya.getLife() != 0)
 			{
-				tourJoueur(grilleZayaV, sc, Zaya, grilleZaya, bateauxZaya);
+				tourJoueur();
 			}
 		}
 		return etat;
 	}
-	public static boolean[] recherche(int x, int y, int direction, int[][] grilleJoueur, int[][] grilleJoueurV, int[][] grilleZayaV, Scanner sc, Joueur Zaya, Joueur joueur, int[][] grilleZaya, Bateau[] bateauxZaya, Bateau[] bateauxJ)
+	/**
+	 * Définit le comportement de Zaya à partir du moment où elle touche un bateau.
+	 * @param x Position horizontale de départ de la recherche (de la case touchée donc).
+	 * @param y Position horizontale de départ de la recherche (de la case touchée donc).
+	 * @param direction La direction dans laquelle Zaya commence sa recherche.
+	 * @return Le premier booleen vaut TRUE si Zaya touche un bateau, le deuxième vaut TRUE si Zaya coule un bateau, sinon les booleens valent FALSE.
+	 */
+	public static boolean[] recherche(int x, int y, int direction)
 	{
 		boolean[] etat = {true,false};
 		int i = 1;
@@ -452,7 +467,7 @@ public class BatailleNavale {
 				{
 					while(!etat[1] && etat[0] && grilleJoueurV[x-i][y] == 0)
 					{
-						etat = bombe(x-i, y, grilleJoueur, grilleJoueurV, grilleZayaV, sc, Zaya, joueur, grilleZaya, bateauxZaya, bateauxJ);
+						etat = bombe(x-i, y);
 						i++;
 						if(etat[1])
 						{
@@ -476,7 +491,7 @@ public class BatailleNavale {
 								int h = (int)(Math.random()*12);
 								if(grilleJoueurV[g][h] == 2 && joueur.getLife() != 0 && Zaya.getLife() != 0)
 								{
-									etat = recherche(g, h, (int)((Math.random()*4)+1), grilleJoueur, grilleJoueurV, grilleZayaV, sc, Zaya, joueur, grilleZaya, bateauxZaya, bateauxJ);
+									etat = recherche(g, h, (int)((Math.random()*4)+1));
 									if(!etat[0] && !etat[1])
 										grilleJoueurV[g][h] = 3;
 								}
@@ -486,22 +501,22 @@ public class BatailleNavale {
 					}
 					if(!etat[1] && grilleJoueurV[x+1][y] == 0)
 					{
-						etat = recherche(x, y, 2, grilleJoueur, grilleJoueurV, grilleZayaV, sc, Zaya, joueur, grilleZaya, bateauxZaya, bateauxJ);
+						etat = recherche(x, y, 2);
 					}
 					else if (!etat[1] && grilleJoueurV[x][y-1] == 0)
 					{
-						etat = recherche(x, y, 3, grilleJoueur, grilleJoueurV, grilleZayaV, sc, Zaya, joueur, grilleZaya, bateauxZaya, bateauxJ);
+						etat = recherche(x, y, 3);
 					}
 					else if (!etat[1] && grilleJoueurV[x][y+1] == 0)
 					{
-						etat = recherche(x, y, 4, grilleJoueur, grilleJoueurV, grilleZayaV, sc, Zaya, joueur, grilleZaya, bateauxZaya, bateauxJ);
+						etat = recherche(x, y, 4);
 					}					
 				}
 				else if(direction == 2)
 				{
 					while(!etat[1] && etat[0] && grilleJoueurV[x+i][y] == 0)
 					{
-						etat = bombe(x+i, y, grilleJoueur, grilleJoueurV, grilleZayaV, sc, Zaya, joueur, grilleZaya, bateauxZaya, bateauxJ);
+						etat = bombe(x+i, y);
 						i++;
 						if(etat[1])
 						{
@@ -525,7 +540,7 @@ public class BatailleNavale {
 								int h = (int)(Math.random()*12);
 								if(grilleJoueurV[g][h] == 2 && joueur.getLife() != 0 && Zaya.getLife() != 0)
 								{
-									etat = recherche(g, h, (int)((Math.random()*4)+1), grilleJoueur, grilleJoueurV, grilleZayaV, sc, Zaya, joueur, grilleZaya, bateauxZaya, bateauxJ);
+									etat = recherche(g, h, (int)((Math.random()*4)+1));
 									if(!etat[0] && !etat[1])
 										grilleJoueurV[g][h] = 3;
 								}
@@ -535,22 +550,22 @@ public class BatailleNavale {
 					}
 					if(!etat[1] && grilleJoueurV[x-1][y] == 0)
 					{
-						etat = recherche(x, y, 1, grilleJoueur, grilleJoueurV, grilleZayaV, sc, Zaya, joueur, grilleZaya, bateauxZaya, bateauxJ);
+						etat = recherche(x, y, 1);
 					}
 					else if (!etat[1] && grilleJoueurV[x][y-1] == 0)
 					{
-						etat = recherche(x, y, 3, grilleJoueur, grilleJoueurV, grilleZayaV, sc, Zaya, joueur, grilleZaya, bateauxZaya, bateauxJ);
+						etat = recherche(x, y, 3);
 					}
 					else if (!etat[1] && grilleJoueurV[x][y+1] == 0)
 					{
-						etat = recherche(x, y, 4, grilleJoueur, grilleJoueurV, grilleZayaV, sc, Zaya, joueur, grilleZaya, bateauxZaya, bateauxJ);
+						etat = recherche(x, y, 4);
 					}
 				}
 				else if(direction == 3)
 				{
 					while(!etat[1] && etat[0] && grilleJoueurV[x][y-i] == 0)
 					{
-						etat = bombe(x, y-i, grilleJoueur, grilleJoueurV, grilleZayaV, sc, Zaya, joueur, grilleZaya, bateauxZaya, bateauxJ);
+						etat = bombe(x, y-i);
 						i++;
 						if(etat[1])
 						{
@@ -574,7 +589,7 @@ public class BatailleNavale {
 								int h = (int)(Math.random()*12);
 								if(grilleJoueurV[g][h] == 2 && joueur.getLife() != 0 && Zaya.getLife() != 0)
 								{
-									etat = recherche(g, h, (int)((Math.random()*4)+1), grilleJoueur, grilleJoueurV, grilleZayaV, sc, Zaya, joueur, grilleZaya, bateauxZaya, bateauxJ);
+									etat = recherche(g, h, (int)((Math.random()*4)+1));
 									if(!etat[0] && !etat[1])
 										grilleJoueurV[g][h] = 3;
 								}
@@ -584,22 +599,22 @@ public class BatailleNavale {
 					}
 					if(!etat[1] && grilleJoueurV[x][y+1] == 0)
 					{
-						etat = recherche(x, y, 4, grilleJoueur, grilleJoueurV, grilleZayaV, sc, Zaya, joueur, grilleZaya, bateauxZaya, bateauxJ);
+						etat = recherche(x, y, 4);
 					}
 					else if (!etat[1] && grilleJoueurV[x-1][y] == 0)
 					{
-						etat = recherche(x, y, 1, grilleJoueur, grilleJoueurV, grilleZayaV, sc, Zaya, joueur, grilleZaya, bateauxZaya, bateauxJ);
+						etat = recherche(x, y, 1);
 					}
 					else if (!etat[1] && grilleJoueurV[x+1][y] == 0)
 					{
-						etat = recherche(x, y, 2, grilleJoueur, grilleJoueurV, grilleZayaV, sc, Zaya, joueur, grilleZaya, bateauxZaya, bateauxJ);
+						etat = recherche(x, y, 2);
 					}
 				}
 				else
 				{
 					while(!etat[1] && etat[0] && grilleJoueurV[x][y+i] == 0)
 					{
-						etat = bombe(x, y+i, grilleJoueur, grilleJoueurV, grilleZayaV, sc, Zaya, joueur, grilleZaya, bateauxZaya, bateauxJ);
+						etat = bombe(x, y+i);
 						i++;
 						if(etat[1])
 						{
@@ -623,7 +638,7 @@ public class BatailleNavale {
 								int h = (int)(Math.random()*12);
 								if(grilleJoueurV[g][h] == 2 && joueur.getLife() != 0 && Zaya.getLife() != 0)
 								{
-									etat = recherche(g, h, (int)((Math.random()*4)+1), grilleJoueur, grilleJoueurV, grilleZayaV, sc, Zaya, joueur, grilleZaya, bateauxZaya, bateauxJ);
+									etat = recherche(g, h, (int)((Math.random()*4)+1));
 									if(!etat[0] && !etat[1])
 										grilleJoueurV[g][h] = 3;
 								}
@@ -633,15 +648,15 @@ public class BatailleNavale {
 					}
 					if(!etat[1] && grilleJoueurV[x][y-1] == 0)
 					{
-						etat = recherche(x, y, 3, grilleJoueur, grilleJoueurV, grilleZayaV, sc, Zaya, joueur, grilleZaya, bateauxZaya, bateauxJ);
+						etat = recherche(x, y, 3);
 					}
 					else if (!etat[1] && grilleJoueurV[x-1][y] == 0)
 					{
-						etat = recherche(x, y, 1, grilleJoueur, grilleJoueurV, grilleZayaV, sc, Zaya, joueur, grilleZaya, bateauxZaya, bateauxJ);
+						etat = recherche(x, y, 1);
 					}
 					else if (!etat[1] && grilleJoueurV[x+1][y] == 0)
 					{
-						etat = recherche(x, y, 2, grilleJoueur, grilleJoueurV, grilleZayaV, sc, Zaya, joueur, grilleZaya, bateauxZaya, bateauxJ);
+						etat = recherche(x, y, 2);
 					}
 				}
 			}
@@ -653,6 +668,10 @@ public class BatailleNavale {
 		}
 		return etat;
 	}
+	/**
+	 * Remplit un tableau de 0.
+	 * @param tab Le tableau à réinitialiser.
+	 */
 	public static void reinitialiser (int[][] tab)
 	{
 		for (int i=0; i<tab.length; i++)

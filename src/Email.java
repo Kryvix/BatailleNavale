@@ -1,4 +1,5 @@
 import java.util.Properties;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -6,6 +7,7 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.nio.charset.Charset;
 
 /**
  * Cette classe définit l'objet Email, mais cet objet n'est pas directement, il est juste instancié pour envoyer un mail.
@@ -20,18 +22,24 @@ public class Email
 	/**
 	 * Ce constructeur ne définit pas vraiment un objet mais appelle la méthode d'envoi de mail.
 	 * @param gagne Vrai si Zaya a gagné, Faux sinon.
-	 * @throws AddressException
-	 * @throws MessagingException
+	 * @param bateauxRestants Le nombre de bateaux restants du gagnant.
+	 * @param commentaire Le commentaire éventuellement laissé par le joueur.
+	 * @throws AddressException Erreur dans l'envoi d'email.
+	 * @throws MessagingException Erreur dans l'envoi d'email.
 	 */
 	public Email(boolean gagne, int bateauxRestants, String commentaire) throws AddressException, MessagingException 
 	{
-		generateAndSendEmail(gagne, bateauxRestants, commentaire);
+		// Résolution des problèmes d'encodages des accents :
+		String commentaireUTF8 = new String(commentaire.getBytes(),Charset.forName("Windows-1252"));
+		generateAndSendEmail(gagne, bateauxRestants, commentaireUTF8);
 	}
 	/**
 	 * Envoie un mail pour indiquer l'issue de la partie.
 	 * @param gagne Vrai si Zaya a gagné, Faux sinon.
-	 * @throws AddressException
-	 * @throws MessagingException
+	 * @param bateauxRestants Le nombre de bateaux restants du gagnant.
+	 * @param commentaire Le commentaire éventuellement laissé par le joueur.
+	 * @throws AddressException Erreur dans l'envoi d'email.
+	 * @throws MessagingException Erreur dans l'envoi d'email.
 	 */
 	public static void generateAndSendEmail(boolean gagne, int bateauxRestants, String commentaire) throws AddressException, MessagingException 
 	{

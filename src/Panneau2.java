@@ -5,12 +5,18 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
  
+/**
+ * Panneau correspondant à la grille du joueur.
+ * @author Julien EMMANUEL, Charlotte RICHAD, Thomas DUTOUR, Alexis SAGET
+ */
 public class Panneau2 extends JPanel { 
 	
 	private int[][] grille = new int[10][10];
 	private boolean gagne = false;
 	private boolean perdu = false;
-	
+	/**
+	 * Rafraichit l'affichage de la grille.
+	 */
 	public void paintComponent(Graphics g){
 		try 
 		{
@@ -59,7 +65,10 @@ public class Panneau2 extends JPanel {
 			e.printStackTrace();
 		}   
 	}    
-	
+	/**
+	 * Définit (ou actualise) la grille à afficher.
+	 * @param grille La grille à utiliser.
+	 */
 	public void setGrid(int[][] grille)
 	{
 		for(int i = 0; i < grille.length; i++)
@@ -70,14 +79,23 @@ public class Panneau2 extends JPanel {
 			}
 		}
 	}
+	/**
+	 * Affiche l'image de fin si le joueur a gagné.
+	 */
 	public void setGagne()
 	{
 		this.gagne = true;
 	}
+	/**
+	 * Affiche l'image de fin si le joueur a perdu.
+	 */
 	public void setPerdu()
 	{
 		this.perdu = true;
 	}
+	/**
+	 * Efface les images de fin de partie.
+	 */
 	public void reinitAff()
 	{
 		this.gagne = false;
