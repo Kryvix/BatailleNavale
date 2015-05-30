@@ -1,3 +1,0 @@
-COLOR 70
-java BatailleNavaleGraphique
-pause

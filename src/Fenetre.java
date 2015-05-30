@@ -51,4 +51,9 @@ public class Fenetre extends JFrame {
 		pan.repaint(); 
 		pan2.repaint(); 
 	}
+	public void reinitAff()
+	{
+		pan.reinitAff();
+		pan2.reinitAff();
+	}
 }

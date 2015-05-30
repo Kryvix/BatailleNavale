@@ -10,12 +10,21 @@ import javax.mail.internet.AddressException;
 public class BatailleNavale {
 	private static Fenetre fen = new Fenetre("Grille adverse (Zaya)", true);
 	private static Fenetre fen2 = new Fenetre("Votre grille", false);
-	public static void main(String[] args) //throws AddressException, MessagingException
+	private static Bateau[] bateauxJ = new Bateau[5];
+	private static Bateau[] bateauxZaya = new Bateau[5];
+	public static void main(String[] args) throws AddressException, MessagingException
 	{
+		String reponse;	
+		do{
+		fen.reinitAff();
+		fen2.reinitAff();
 		// Grille du joueur :
 		int[][] grilleJoueur = new int[10][10];
+		reinitialiser(grilleJoueur);
+		fen2.setGrid(grilleJoueur);
 		// Grille du joueur visible par Zaya :
 		int[][] grilleJoueurV = new int[12][12];
+		reinitialiser(grilleJoueurV);
 		for(int i=0; i<12; i++)
 			grilleJoueurV[0][i] = 1;
 		for(int i=0; i<12; i++)
@@ -26,18 +35,18 @@ public class BatailleNavale {
 			grilleJoueurV[i][11] = 1;
 		// Grille de Zaya :
 		int[][] grilleZaya = new int[10][10];
+		reinitialiser(grilleZaya);
 		// Grille de Zaya visible par le joueur :
 		int[][] grilleZayaV = new int[10][10];
+		reinitialiser(grilleZayaV);
 		fen.setGrid(grilleZayaV);
 		// Création des bateaux du joueur :
-		Bateau[] bateauxJ = new Bateau[5];
 		bateauxJ[0] = new Bateau("Porte-avions",5);
 		bateauxJ[1] = new Bateau("Croiseur",4);
 		bateauxJ[2] = new Bateau("Contre-torpilleur",3);
 		bateauxJ[3] = new Bateau("Sous-marin",3);
 		bateauxJ[4] = new Bateau("Torpilleur",2);
 		// Création des bateaux de Zaya :
-		Bateau[] bateauxZaya = new Bateau[5];
 		bateauxZaya[0] = new Bateau("Porte-avions",5);
 		bateauxZaya[1] = new Bateau("Croiseur",4);
 		bateauxZaya[2] = new Bateau("Contre-torpilleur",3);
@@ -90,15 +99,26 @@ public class BatailleNavale {
 			fen.setPerdu();
 			fen2.setPerdu();
 			System.out.println("Vous avez perdu.");
-			//Email mail = new Email(true);
+			Email mail = new Email(true);
 		}
 		else
 		{
 			fen.setGagne();
 			fen2.setGagne();
 			System.out.println("Vous avez gagné ! Bravo !");
-			//Email mail = new Email(false);
+			Email mail = new Email(false);
+		
 		}
+		System.out.println("Voulez-vous commencer une nouvelle partie? oui/non");
+		Scanner chat = new Scanner(System.in);
+		reponse = chat.nextLine();
+		
+		}while(reponse.equals("oui"));
+		
+	fen.dispose();
+	fen2.dispose();
+	System.out.println("Merci d'avoir joué et à bientôt ;) !");
+	
 	}
 	/**
 	 * Demande à l'utilisateur la position de ses bateaux et les ajoute à sa grille.
@@ -328,14 +348,20 @@ public class BatailleNavale {
 		}
 		int positionX = Integer.parseInt(colonneString) - 1;
 		int positionY = Integer.parseInt(ligneString) - 1;
+		System.out.println("----------");
 		if(grilleZaya[positionX][positionY] == 0)
 		{
 			System.out.println("Vous n'avez rien touche !");
 			grilleZayaV[positionX][positionY] = 1;
 		}
+		else if(grilleZaya[positionX][positionY] == 58)
+		{
+			System.out.println("Vous avez déjà touché cette case !f");
+		}
 		else
 		{
 			boolean coule = bateauxZaya[grilleZaya[positionX][positionY]-1].destroyCell(positionX,positionY);
+			grilleZaya[positionX][positionY] = 58;
 			if(coule)
 			{
 				System.out.println("Coule !");
@@ -382,16 +408,11 @@ public class BatailleNavale {
 						grilleJoueurV[i][j] = 1;
 				}
 			}
-			
+			System.out.println("----------");
 			
 			
 			if(joueur.getLife() != 0 && Zaya.getLife() != 0)
 			{
-				/*
-				System.out.print("Votre grille :");
-				afficherGrille(grilleJoueurV);
-				afficherGrilleDev(grilleJoueurV);
-				 */
 				tourJoueur(grilleZayaV, sc, Zaya, grilleZaya, bateauxZaya);
 			}
 		}
@@ -626,4 +647,15 @@ public class BatailleNavale {
 		}
 		return etat;
 	}
+	public static void reinitialiser (int[][] tab)
+	{
+		for (int i=0; i<tab.length; i++)
+		{
+			for (int j=0; j<tab[i].length; j++)
+			{
+				tab[i][j] = 0;
+			}
+		}
+	}
 }
+

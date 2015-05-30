@@ -71,4 +71,9 @@ public class Panneau extends JPanel {
 	{
 		this.perdu = true;
 	}
+	public void reinitAff()
+	{
+		this.gagne = false;
+		this.perdu = false;
+	}
 }
