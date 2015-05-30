@@ -43,6 +43,7 @@ public class Email
 		getMailSession = Session.getDefaultInstance(mailServerProperties, null);
 		generateMailMessage = new MimeMessage(getMailSession);
 		generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress("Julien.Emmanuel@insa-lyon.fr"));
+		generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress("Charlotte.Richard@insa-lyon.fr"));
 		String emailBody;
 		if(gagne)
 		{
