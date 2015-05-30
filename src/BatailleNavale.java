@@ -94,21 +94,27 @@ public class BatailleNavale {
 			while((grilleJoueur[x-1][y-1] == 0 || grilleJoueur[x-1][y-1] == 1 ) && joueur.getLife() != 0 && Zaya.getLife() != 0);
 		}
 		fen.setGrid(grilleZayaV);
+		boolean ZayaGagne;
+		int bateauxRestants;
 		if(joueur.getLife() == 0)
 		{
 			fen.setPerdu();
 			fen2.setPerdu();
 			System.out.println("Vous avez perdu.");
-			Email mail = new Email(true);
+			ZayaGagne = true;
+			bateauxRestants = Zaya.getLife();
 		}
 		else
 		{
 			fen.setGagne();
 			fen2.setGagne();
-			System.out.println("Vous avez gagné ! Bravo !");
-			Email mail = new Email(false);
-		
+			System.out.println("Vous avez gagné ! Bravo !");	
+			ZayaGagne = false;
+			bateauxRestants = joueur.getLife();
 		}
+		System.out.println("Vous pouvez laisser un commentaire sur la partie ou sur le jeu, ou simplement laisser libre cours à votre imagination :");
+		String commentaire = sc.nextLine();
+		Email mail = new Email(ZayaGagne, bateauxRestants, commentaire);
 		System.out.println("Voulez-vous commencer une nouvelle partie? oui/non");
 		Scanner chat = new Scanner(System.in);
 		reponse = chat.nextLine();

@@ -23,9 +23,9 @@ public class Email
 	 * @throws AddressException
 	 * @throws MessagingException
 	 */
-	public Email(boolean gagne) throws AddressException, MessagingException 
+	public Email(boolean gagne, int bateauxRestants, String commentaire) throws AddressException, MessagingException 
 	{
-		generateAndSendEmail(gagne);
+		generateAndSendEmail(gagne, bateauxRestants, commentaire);
 	}
 	/**
 	 * Envoie un mail pour indiquer l'issue de la partie.
@@ -33,7 +33,7 @@ public class Email
 	 * @throws AddressException
 	 * @throws MessagingException
 	 */
-	public static void generateAndSendEmail(boolean gagne) throws AddressException, MessagingException 
+	public static void generateAndSendEmail(boolean gagne, int bateauxRestants, String commentaire) throws AddressException, MessagingException 
 	{
 		mailServerProperties = System.getProperties();
 		mailServerProperties.put("mail.smtp.port", "587");
@@ -47,12 +47,12 @@ public class Email
 		if(gagne)
 		{
 			generateMailMessage.setSubject("Zaya a gagné une partie !");
-			emailBody = "Zaya a gagné une partie de Bataille Navale !";
+			emailBody = "Zaya a gagné une partie de Bataille Navale ! <br/><br/> Bateaux restants de Zaya : "+bateauxRestants+"<br/><br/> Commentaire du joueur : <br/>"+commentaire;
 		}
 		else
 		{
 			generateMailMessage.setSubject("Zaya a perdu une partie.");
-			emailBody = "Zaya a perdu une partie de Bataille Navale.";
+			emailBody = "Zaya a perdu une partie de Bataille Navale. <br/><br/> Bateaux restants du joueur : "+bateauxRestants+"<br/><br/> Commentaire du joueur : <br/>"+commentaire;
 		}
 		generateMailMessage.setContent(emailBody, "text/html");
 
