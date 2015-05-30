@@ -10,7 +10,7 @@ import javax.mail.internet.AddressException;
 public class BatailleNavale {
 	private static Fenetre fen = new Fenetre("Grille adverse (Zaya)", true);
 	private static Fenetre fen2 = new Fenetre("Votre grille", false);
-	public static void main(String[] args) throws AddressException, MessagingException
+	public static void main(String[] args) //throws AddressException, MessagingException
 	{
 		// Grille du joueur :
 		int[][] grilleJoueur = new int[10][10];
@@ -90,14 +90,14 @@ public class BatailleNavale {
 			fen.setPerdu();
 			fen2.setPerdu();
 			System.out.println("Vous avez perdu.");
-			Email mail = new Email(true);
+			//Email mail = new Email(true);
 		}
 		else
 		{
 			fen.setGagne();
 			fen2.setGagne();
 			System.out.println("Vous avez gagné ! Bravo !");
-			Email mail = new Email(false);
+			//Email mail = new Email(false);
 		}
 	}
 	/**
