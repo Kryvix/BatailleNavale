@@ -7,6 +7,8 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
 /**
@@ -53,16 +55,15 @@ public class Email
 		String emailBody;
 		if(gagne)
 		{
-			generateMailMessage.setSubject("Zaya a gagné une partie !");
-			emailBody = "Zaya a gagné une partie de Bataille Navale ! <br/><br/> Bateaux restants de Zaya : "+bateauxRestants+"<br/><br/> Commentaire du joueur : <br/>"+commentaire;
+			generateMailMessage.setSubject("Zaya a gagné une partie !", "UTF-8");
+			emailBody = "Zaya a gagné une partie de Bataille Navale ! \r\n \r\nBateaux restants de Zaya : "+bateauxRestants+"\r\n \r\nCommentaire du joueur : \r\n"+commentaire;
 		}
 		else
 		{
-			generateMailMessage.setSubject("Zaya a perdu une partie.");
-			emailBody = "Zaya a perdu une partie de Bataille Navale. <br/><br/> Bateaux restants du joueur : "+bateauxRestants+"<br/><br/> Commentaire du joueur : <br/>"+commentaire;
+			generateMailMessage.setSubject("Zaya a perdu une partie.", "UTF-8");
+			emailBody = "Zaya a perdu une partie de Bataille Navale. \r\n \r\nBateaux restants du joueur : "+bateauxRestants+"\r\n \r\nCommentaire du joueur : \r\n"+commentaire;
 		}
-		String emailBodyUTF8 = new String(emailBody.getBytes(),Charset.forName("Windows-1252"));
-		generateMailMessage.setContent(emailBodyUTF8, "text/html");
+		generateMailMessage.setText(emailBody, "UTF-8");
 
 		Transport transport = getMailSession.getTransport("smtp");
 		
