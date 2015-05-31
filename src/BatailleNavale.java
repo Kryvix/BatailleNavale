@@ -88,7 +88,7 @@ public class BatailleNavale {
 					}
 					count++;
 				}
-				while(grilleJoueurV[x][y] != 0 && joueur.getLife() != 0 && Zaya.getLife() != 0)
+				while(x==0 || y==0 || (grilleJoueurV[x][y] != 0 && joueur.getLife() != 0 && Zaya.getLife() != 0))
 				{
 					x = (int)(Math.random()*12);
 					y = (int)(Math.random()*12);
@@ -359,7 +359,7 @@ public class BatailleNavale {
 		System.out.println("----------");
 		if(grilleZaya[positionX][positionY] == 0)
 		{
-			System.out.println("Vous n'avez rien touche !");
+			System.out.println("Vous n'avez rien touché !");
 			grilleZayaV[positionX][positionY] = 1;
 		}
 		else if(grilleZaya[positionX][positionY] == 58)

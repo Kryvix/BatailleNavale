@@ -29,10 +29,7 @@ public class Email
 	 */
 	public Email(boolean gagne, int bateauxRestants, String commentaire) throws AddressException, MessagingException 
 	{
-		// Résolution des problèmes d'encodages des accents :
-		String commentaireUTF8 = new String(commentaire.getBytes(),Charset.forName("Windows-1252"));
-		//String commentaireUTF8 = new String(commentaire.getBytes(),Charset.forName("UTF-8"));
-		generateAndSendEmail(gagne, bateauxRestants, commentaireUTF8);
+		generateAndSendEmail(gagne, bateauxRestants, commentaire);
 	}
 	/**
 	 * Envoie un mail pour indiquer l'issue de la partie.
@@ -64,7 +61,8 @@ public class Email
 			generateMailMessage.setSubject("Zaya a perdu une partie.");
 			emailBody = "Zaya a perdu une partie de Bataille Navale. <br/><br/> Bateaux restants du joueur : "+bateauxRestants+"<br/><br/> Commentaire du joueur : <br/>"+commentaire;
 		}
-		generateMailMessage.setContent(emailBody, "text/html");
+		String emailBodyUTF8 = new String(emailBody.getBytes(),Charset.forName("Windows-1252"));
+		generateMailMessage.setContent(emailBodyUTF8, "text/html");
 
 		Transport transport = getMailSession.getTransport("smtp");
 		
