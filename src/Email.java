@@ -67,7 +67,7 @@ public class Email
 
 		Transport transport = getMailSession.getTransport("smtp");
 		
-		transport.connect("smtp.gmail.com", "BatailleNavaleG1P58INSA", "CharlotteAlexisThomas");
+		transport.connect("smtp.gmail.com", "BatailleNavaleG1P58INSA", "CharlotteThomasAlexis");
 		transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
 		transport.close();
 	}
