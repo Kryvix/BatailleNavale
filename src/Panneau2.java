@@ -6,7 +6,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
  
 /**
- * Panneau correspondant à la grille du joueur.
+ * Panneau correspondant Ã  la grille du joueur.
  * @author Julien EMMANUEL, Charlotte RICHAD, Thomas DUTOUR, Alexis SAGET
  */
 public class Panneau2 extends JPanel { 
@@ -66,8 +66,8 @@ public class Panneau2 extends JPanel {
 		}   
 	}    
 	/**
-	 * Définit (ou actualise) la grille à afficher.
-	 * @param grille La grille à utiliser.
+	 * DÃ©finit (ou actualise) la grille Ã  afficher.
+	 * @param grille La grille Ã  utiliser.
 	 */
 	public void setGrid(int[][] grille)
 	{
@@ -80,7 +80,7 @@ public class Panneau2 extends JPanel {
 		}
 	}
 	/**
-	 * Affiche l'image de fin si le joueur a gagné.
+	 * Affiche l'image de fin si le joueur a gagnÃ©.
 	 */
 	public void setGagne()
 	{

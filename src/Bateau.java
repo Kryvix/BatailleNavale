@@ -1,5 +1,5 @@
 /**
- * Cette classe définit l'objet "bateau".
+ * Cette classe dÃ©finit l'objet "bateau".
  * @author Julien EMMANUEL, Charlotte RICHAD, Thomas DUTOUR, Alexis SAGET
  */
 public class Bateau {
@@ -30,7 +30,7 @@ public class Bateau {
 		}
 	}
 	/**
-	 * Renvoie les caractéristiques principales du bateau sous forme d'une chaîne de caractères.
+	 * Renvoie les caractÃ©ristiques principales du bateau sous forme d'une chaÃ®ne de caractÃ¨res.
 	 */
 	public String toString()
 	{
@@ -62,7 +62,7 @@ public class Bateau {
 		return vertical;
 	}
 	/**
-	 * Définit précisément la position du bateau
+	 * DÃ©finit prÃ©cisÃ©ment la position du bateau
 	 * @param positionX La colonne d'origine du bateau.
 	 * @param positionY La ligne d'origine du bateau.
 	 * @param vertical L'orientation du bateau.
@@ -74,8 +74,8 @@ public class Bateau {
 		this.vertical = vertical;
 	}
 	/**
-	 * Vérifie si le bateau n'est pas en dehors de la grille (dont la taille est 10x10)
-	 * @return TRUE si le bateau est bien entièrement contenu dans la grille, sinon FALSE.
+	 * VÃ©rifie si le bateau n'est pas en dehors de la grille (dont la taille est 10x10)
+	 * @return TRUE si le bateau est bien entiÃ¨rement contenu dans la grille, sinon FALSE.
 	 */
 	public boolean verifierPosition()
 	{
@@ -100,10 +100,10 @@ public class Bateau {
 		return positionValide;
 	}
 	/**
-	 * Détruit la case ciblée du bateau.
-	 * @param x La colonne ciblée
-	 * @param y La ligne ciblée
-	 * @return TRUE si le bateau a été coulé, FALSE sinon.
+	 * DÃ©truit la case ciblÃ©e du bateau.
+	 * @param x La colonne ciblÃ©e
+	 * @param y La ligne ciblÃ©e
+	 * @return TRUE si le bateau a Ã©tÃ© coulÃ©, FALSE sinon.
 	 */
 	public boolean destroyCell(int x, int y)
 	{

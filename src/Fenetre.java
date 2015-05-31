@@ -1,6 +1,6 @@
 import javax.swing.JFrame;
 /**
- * Cette classe instancie une fenêtre de jeu.
+ * Cette classe instancie une fenÃªtre de jeu.
  * @author Julien EMMANUEL, Charlotte RICHAD, Thomas DUTOUR, Alexis SAGET
  */
 public class Fenetre extends JFrame {
@@ -9,9 +9,9 @@ public class Fenetre extends JFrame {
 	private Panneau2 pan2 = new Panneau2();
 	private boolean Zaya;
 	/**
-	 * Constructeur d'une fenêtre
-	 * @param nom Le nom qui s'affiche en haut de la fenêtre.
-	 * @param Zaya TRUE si la fenêtre affiche la grille de Zaya, FALSE sinon (pour le joueur donc)
+	 * Constructeur d'une fenÃªtre
+	 * @param nom Le nom qui s'affiche en haut de la fenÃªtre.
+	 * @param Zaya TRUE si la fenÃªtre affiche la grille de Zaya, FALSE sinon (pour le joueur donc)
 	 */
 	public Fenetre(String nom, boolean Zaya)
 	{
@@ -33,7 +33,7 @@ public class Fenetre extends JFrame {
 	}
 	/**
 	 * Rafraichit l'affichage
-	 * @param grille La grille à afficher dans la fenêtre.
+	 * @param grille La grille Ã  afficher dans la fenÃªtre.
 	 */
 	public void setGrid(int[][] grille)
 	{
@@ -49,7 +49,7 @@ public class Fenetre extends JFrame {
 		}
 	}
 	/**
-	 * Affiche l'image de fin si le joueur a gagné.
+	 * Affiche l'image de fin si le joueur a gagnÃ©.
 	 */
 	public void setGagne()
 	{

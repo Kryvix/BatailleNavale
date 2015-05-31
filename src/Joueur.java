@@ -1,17 +1,17 @@
 /**
- * Cette classe définit l'objet "joueur".
+ * Cette classe dÃ©finit l'objet "joueur".
  * @author Julien EMMANUEL, Charlotte RICHAD, Thomas DUTOUR, Alexis SAGET
  */
 public class Joueur {
 	private int bateauxRestants;
 	/**
-	 * Ce constructeur instancie un joueur. Cet objet est inutile car il ne contient qu'une seule variable, mais la flemme de réécrire tout le code donc ça restera comme ça.
+	 * Ce constructeur instancie un joueur. Cet objet est inutile car il ne contient qu'une seule variable, mais la flemme de rÃ©Ã©crire tout le code donc Ã§a restera comme Ã§a.
 	 */
 	public Joueur() {
 		this.bateauxRestants = 5;
 	}
 	/**
-	 * Définit le nombre de bateaux restants du joueur.
+	 * DÃ©finit le nombre de bateaux restants du joueur.
 	 * @param life Le nombre de bateaux restants.
 	 */
 	public void setLife(int life)
@@ -27,7 +27,7 @@ public class Joueur {
 		return bateauxRestants;
 	}
 	/**
-	 * Enlève une vie au joueur.
+	 * EnlÃ¨ve une vie au joueur.
 	 */
 	public void enleverVie()
 	{

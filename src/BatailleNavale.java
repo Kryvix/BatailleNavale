@@ -21,8 +21,8 @@ public class BatailleNavale {
 	static Joueur Zaya = new Joueur();
 	
 	/**
-	 * Méthode principale du jeu, qui initialise la partie puis crée des tours de jeu tant qu'il reste des bateaux.
-	 * @param args Paramètre non utilisé.
+	 * MÃ©thode principale du jeu, qui initialise la partie puis crÃ©e des tours de jeu tant qu'il reste des bateaux.
+	 * @param args ParamÃ¨tre non utilisÃ©.
 	 * @throws AddressException Erreur dans l'envoi d'email.
 	 * @throws MessagingException Erreur dans l'envoi d'email.
 	 */
@@ -50,13 +50,13 @@ public class BatailleNavale {
 		// Grille de Zaya visible par le joueur :
 		reinitialiser(grilleZayaV);
 		fen.setGrid(grilleZayaV);
-		// Création des bateaux du joueur :
+		// CrÃ©ation des bateaux du joueur :
 		bateauxJ[0] = new Bateau("Porte-avions",5);
 		bateauxJ[1] = new Bateau("Croiseur",4);
 		bateauxJ[2] = new Bateau("Contre-torpilleur",3);
 		bateauxJ[3] = new Bateau("Sous-marin",3);
 		bateauxJ[4] = new Bateau("Torpilleur",2);
-		// Création des bateaux de Zaya :
+		// CrÃ©ation des bateaux de Zaya :
 		bateauxZaya[0] = new Bateau("Porte-avions",5);
 		bateauxZaya[1] = new Bateau("Croiseur",4);
 		bateauxZaya[2] = new Bateau("Contre-torpilleur",3);
@@ -116,11 +116,11 @@ public class BatailleNavale {
 		{
 			fen.setGagne();
 			fen2.setGagne();
-			System.out.println("Vous avez gagné ! Bravo !");	
+			System.out.println("Vous avez gagnÃ© ! Bravo !");	
 			ZayaGagne = false;
 			bateauxRestants = joueur.getLife();
 		}
-		System.out.println("Vous pouvez laisser un commentaire sur la partie ou sur le jeu, ou simplement laisser libre cours à votre imagination :");
+		System.out.println("Vous pouvez laisser un commentaire sur la partie ou sur le jeu, ou simplement laisser libre cours Ã  votre imagination :");
 		String commentaire = sc.nextLine();
 		Email mail = new Email(ZayaGagne, bateauxRestants, commentaire);
 		System.out.println("Voulez-vous commencer une nouvelle partie? oui/non");
@@ -130,11 +130,11 @@ public class BatailleNavale {
 		
 	fen.dispose();
 	fen2.dispose();
-	System.out.println("Merci d'avoir joué et à bientôt ;) !");
+	System.out.println("Merci d'avoir jouÃ© et Ã  bientÃ´t ;) !");
 	sc.close();
 	}
 	/**
-	 * Demande à l'utilisateur la position de ses bateaux et les ajoute à sa grille.
+	 * Demande Ã  l'utilisateur la position de ses bateaux et les ajoute Ã  sa grille.
 	 */
 	public static void positionner()
 	{
@@ -169,7 +169,7 @@ public class BatailleNavale {
 					while(colonneString.length()==0)
 						colonneString = sc.nextLine();
 				}
-				System.out.println("Le "+bateauxJ[i].getName()+" doit il être vertical ou horizontal (horizontal = 0, vertical = 1) :");
+				System.out.println("Le "+bateauxJ[i].getName()+" doit il Ãªtre vertical ou horizontal (horizontal = 0, vertical = 1) :");
 				String verticalString = sc.nextLine();
 				while(verticalString.length()==0)
 					verticalString = sc.nextLine();
@@ -233,7 +233,7 @@ public class BatailleNavale {
 		}
 	}
 	/**
-	 * Positionne aléatoirement les bateaux de Zaya.
+	 * Positionne alÃ©atoirement les bateaux de Zaya.
 	 */
 	public static void positionnerZaya()
 	{
@@ -297,8 +297,8 @@ public class BatailleNavale {
 		}
 	}
 	/**
-	 * Vérifie qu'une chaîne de caractère correspond bien à un nombre compris entre 1 et 10 inclus.
-	 * @param chaine La chaîne à analyser
+	 * VÃ©rifie qu'une chaÃ®ne de caractÃ¨re correspond bien Ã  un nombre compris entre 1 et 10 inclus.
+	 * @param chaine La chaÃ®ne Ã  analyser
 	 * @return TRUE si le nombre est valide, sinon FALSE.
 	 */
 	public static boolean verifierNombre(String chaine)
@@ -364,7 +364,7 @@ public class BatailleNavale {
 		}
 		else if(grilleZaya[positionX][positionY] == 58)
 		{
-			System.out.println("Vous avez déjà touché cette case !f");
+			System.out.println("Vous avez dÃ©jÃ  touchÃ© cette case !f");
 		}
 		else
 		{
@@ -381,10 +381,10 @@ public class BatailleNavale {
 		}
 	}
 	 /**
-	  * Méthode utilisée par Zaya pour tirer sur une case dans la grille du joueur.
-	  * @param x Position horizontale de la case visée.
-	  * @param y Position verticale de la case visée.
-	  * @return Le premier booleen vaut TRUE si la bombe touche un bateau, le deuxième vaut TRUE si la bombe coule un bateau, sinon les booleens valent FALSE.
+	  * MÃ©thode utilisÃ©e par Zaya pour tirer sur une case dans la grille du joueur.
+	  * @param x Position horizontale de la case visÃ©e.
+	  * @param y Position verticale de la case visÃ©e.
+	  * @return Le premier booleen vaut TRUE si la bombe touche un bateau, le deuxiÃ¨me vaut TRUE si la bombe coule un bateau, sinon les booleens valent FALSE.
 	  */
 	public static boolean[] bombe(int x, int y)
 	{
@@ -393,7 +393,7 @@ public class BatailleNavale {
 		{
 			if(grilleJoueur[x-1][y-1] == 0)
 			{
-				System.out.println("L'ordinateur n'a rien touché !");
+				System.out.println("L'ordinateur n'a rien touchÃ© !");
 				grilleJoueurV[x][y] = 1;
 				grilleJoueur[x-1][y-1] = 42;
 			}
@@ -403,12 +403,12 @@ public class BatailleNavale {
 				etat[1] = bateauxJ[grilleJoueur[x-1][y-1]-1].destroyCell(x-1,y-1);
 				if(etat[1])
 				{
-					System.out.println("L'ordinateur a coulé votre "+bateauxJ[grilleJoueur[x-1][y-1]-1].getName()+" !");
+					System.out.println("L'ordinateur a coulÃ© votre "+bateauxJ[grilleJoueur[x-1][y-1]-1].getName()+" !");
 					joueur.enleverVie();
 				}
 				else
 				{
-					System.out.println("L'ordinateur a touché votre "+bateauxJ[grilleJoueur[x-1][y-1]-1].getName()+" !");
+					System.out.println("L'ordinateur a touchÃ© votre "+bateauxJ[grilleJoueur[x-1][y-1]-1].getName()+" !");
 				}
 				grilleJoueurV[x][y] = 2;
 				grilleJoueur[x-1][y-1] = 6;
@@ -433,11 +433,11 @@ public class BatailleNavale {
 		return etat;
 	}
 	/**
-	 * Définit le comportement de Zaya à partir du moment où elle touche un bateau.
-	 * @param x Position horizontale de départ de la recherche (de la case touchée donc).
-	 * @param y Position horizontale de départ de la recherche (de la case touchée donc).
+	 * DÃ©finit le comportement de Zaya Ã  partir du moment oÃ¹ elle touche un bateau.
+	 * @param x Position horizontale de dÃ©part de la recherche (de la case touchÃ©e donc).
+	 * @param y Position horizontale de dÃ©part de la recherche (de la case touchÃ©e donc).
 	 * @param direction La direction dans laquelle Zaya commence sa recherche.
-	 * @return Le premier booleen vaut TRUE si Zaya touche un bateau, le deuxième vaut TRUE si Zaya coule un bateau, sinon les booleens valent FALSE.
+	 * @return Le premier booleen vaut TRUE si Zaya touche un bateau, le deuxiÃ¨me vaut TRUE si Zaya coule un bateau, sinon les booleens valent FALSE.
 	 */
 	public static boolean[] recherche(int x, int y, int direction)
 	{
@@ -670,7 +670,7 @@ public class BatailleNavale {
 	}
 	/**
 	 * Remplit un tableau de 0.
-	 * @param tab Le tableau à réinitialiser.
+	 * @param tab Le tableau Ã  rÃ©initialiser.
 	 */
 	public static void reinitialiser (int[][] tab)
 	{

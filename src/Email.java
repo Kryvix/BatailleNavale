@@ -10,7 +10,7 @@ import javax.mail.internet.MimeMessage;
 import java.nio.charset.Charset;
 
 /**
- * Cette classe définit l'objet Email, mais cet objet n'est pas directement, il est juste instancié pour envoyer un mail.
+ * Cette classe dÃ©finit l'objet Email, mais cet objet n'est pas directement, il est juste instanciÃ© pour envoyer un mail.
  * @author Julien EMMANUEL, Charlotte RICHAD, Thomas DUTOUR, Alexis SAGET, Crunchify.com
  */
 public class Email 
@@ -20,24 +20,25 @@ public class Email
 	static MimeMessage generateMailMessage;
  
 	/**
-	 * Ce constructeur ne définit pas vraiment un objet mais appelle la méthode d'envoi de mail.
-	 * @param gagne Vrai si Zaya a gagné, Faux sinon.
+	 * Ce constructeur ne dÃ©finit pas vraiment un objet mais appelle la mÃ©thode d'envoi de mail.
+	 * @param gagne Vrai si Zaya a gagnÃ©, Faux sinon.
 	 * @param bateauxRestants Le nombre de bateaux restants du gagnant.
-	 * @param commentaire Le commentaire éventuellement laissé par le joueur.
+	 * @param commentaire Le commentaire Ã©ventuellement laissÃ© par le joueur.
 	 * @throws AddressException Erreur dans l'envoi d'email.
 	 * @throws MessagingException Erreur dans l'envoi d'email.
 	 */
 	public Email(boolean gagne, int bateauxRestants, String commentaire) throws AddressException, MessagingException 
 	{
-		// Résolution des problèmes d'encodages des accents :
+		// RÃ©solution des problÃ¨mes d'encodages des accents :
 		String commentaireUTF8 = new String(commentaire.getBytes(),Charset.forName("Windows-1252"));
+		//String commentaireUTF8 = new String(commentaire.getBytes(),Charset.forName("UTF-8"));
 		generateAndSendEmail(gagne, bateauxRestants, commentaireUTF8);
 	}
 	/**
 	 * Envoie un mail pour indiquer l'issue de la partie.
-	 * @param gagne Vrai si Zaya a gagné, Faux sinon.
+	 * @param gagne Vrai si Zaya a gagnÃ©, Faux sinon.
 	 * @param bateauxRestants Le nombre de bateaux restants du gagnant.
-	 * @param commentaire Le commentaire éventuellement laissé par le joueur.
+	 * @param commentaire Le commentaire Ã©ventuellement laissÃ© par le joueur.
 	 * @throws AddressException Erreur dans l'envoi d'email.
 	 * @throws MessagingException Erreur dans l'envoi d'email.
 	 */
@@ -55,8 +56,8 @@ public class Email
 		String emailBody;
 		if(gagne)
 		{
-			generateMailMessage.setSubject("Zaya a gagné une partie !");
-			emailBody = "Zaya a gagné une partie de Bataille Navale ! <br/><br/> Bateaux restants de Zaya : "+bateauxRestants+"<br/><br/> Commentaire du joueur : <br/>"+commentaire;
+			generateMailMessage.setSubject("Zaya a gagnÃ© une partie !");
+			emailBody = "Zaya a gagnÃ© une partie de Bataille Navale ! <br/><br/> Bateaux restants de Zaya : "+bateauxRestants+"<br/><br/> Commentaire du joueur : <br/>"+commentaire;
 		}
 		else
 		{
