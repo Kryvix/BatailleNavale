@@ -17,7 +17,8 @@ public class Fenetre extends JFrame {
 	{
 		this.Zaya = Zaya;
 		this.setTitle(nom);
-		this.setSize(358,380);
+		this.setSize(352,384);
+		this.setUndecorated(true);
 		if(Zaya)
 			this.setLocation(0, 0);
 		else

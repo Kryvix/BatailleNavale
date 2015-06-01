@@ -1,6 +1,4 @@
-import java.nio.charset.Charset;
 import java.util.Scanner;
-import java.util.Map.Entry;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -14,7 +12,7 @@ public class BatailleNavale {
 	static Fenetre fen2 = new Fenetre("Votre grille", false);
 	static Bateau[] bateauxJ = new Bateau[5];
 	static Bateau[] bateauxZaya = new Bateau[5];
-	static Scanner sc = new Scanner(System.in, "UTF-8");
+	static Scanner sc = new Scanner(System.in);
 	static int[][] grilleJoueur = new int[10][10];
 	static int[][] grilleJoueurV = new int[12][12];
 	static int[][] grilleZaya = new int[10][10];
@@ -30,6 +28,7 @@ public class BatailleNavale {
 	 */
 	public static void main(String[] args) throws AddressException, MessagingException
 	{
+		System.out.println("Notice: \n\nBateaux: \n        - Un porte-avions (5 cases)\n        - Un croiseur (4 cases)\n        - Un contre-torpilleur (3 cases)\n        - Un sous-marin (3 cases)\n        - Un torpilleur (2 cases)\n\nPosition des bateaux: \n        - Si vous indiquez 'vertical' le bateau est positionné vers le bas à partir de la case indiquée précédemment \n        - À droite si vous indiquez 'horizontal'  \n\n");
 		String reponse;	
 		do{
 		fen.reinitAff();
@@ -65,7 +64,25 @@ public class BatailleNavale {
 		bateauxZaya[3] = new Bateau("Sous-marin",3);
 		bateauxZaya[4] = new Bateau("Torpilleur",2);
 		// Positionnement des bateaux :
-		positionner();
+		System.out.println("Voulez-vous placer les bateaux au hasard? oui/non");
+		String choix = sc.nextLine();
+		if (choix.equals("oui") || choix.equals("Oui") || choix.equals("OUI"))
+		{
+			positionnerJoueur();
+			fen2.setGrid(grilleJoueur);
+			System.out.println("Cela vous convient-il? oui/non");
+			choix = sc.nextLine();
+			while (choix.equals("non") || choix.equals("Non") || choix.equals("NON"))
+			{
+			reinitialiser(grilleJoueur);
+			positionnerJoueur();
+			fen2.setGrid(grilleJoueur);
+			System.out.println("Cela vous convient-il? oui/non");
+			choix = sc.nextLine();
+			}
+		}	
+		else 
+			positionner();
 		positionnerZaya();
 		joueur.setLife(5);
 		Zaya.setLife(5);
@@ -90,7 +107,7 @@ public class BatailleNavale {
 					}
 					count++;
 				}
-				while(x==0 || y==0 || (grilleJoueurV[x][y] != 0 && joueur.getLife() != 0 && Zaya.getLife() != 0))
+				while(grilleJoueurV[x][y] != 0 && joueur.getLife() != 0 && Zaya.getLife() != 0)
 				{
 					x = (int)(Math.random()*12);
 					y = (int)(Math.random()*12);
@@ -128,7 +145,7 @@ public class BatailleNavale {
 		System.out.println("Voulez-vous commencer une nouvelle partie? oui/non");
 		reponse = sc.nextLine();
 		
-		}while(reponse.equals("oui"));
+		}while(reponse.equals("oui") || reponse.equals("Oui") || reponse.equals("OUI"));
 		
 	fen.dispose();
 	fen2.dispose();
@@ -299,6 +316,70 @@ public class BatailleNavale {
 		}
 	}
 	/**
+	 * Positionne aléatoirement les bateaux du joueur.
+	 */
+	public static void positionnerJoueur()
+	{
+		bateauxJ[0].position(1,3,true);
+		for(int i = 0; i<5; i++)
+		{
+			boolean dansLaGrille = false;
+			boolean casePrise = false;
+			boolean vertical;
+			int positionX = 0;
+			int positionY = 0;
+			while(!dansLaGrille || casePrise)
+			{
+				casePrise = false;
+				positionX = (int)(Math.random()*10);
+				positionY = (int)(Math.random()*10);
+				if((int)(Math.random()*2) == 0)
+					vertical = false;
+				else
+					vertical = true;
+				bateauxJ[i].position(positionX, positionY,vertical);
+				dansLaGrille = bateauxJ[i].verifierPosition();
+				if(dansLaGrille)
+				{
+					for(int k = 0; k<bateauxJ[i].getTaille(); k++)
+					{
+						int x = 0;
+						int y = 0;
+						if(bateauxJ[i].isVertical())
+						{
+							x = positionX;
+							y = positionY + k;
+						}
+						else
+						{
+							x = positionX + k;
+							y = positionY;
+						}
+						if(grilleJoueur[x][y] != 0)
+							casePrise = true;
+					}
+				}
+			}
+			for(int j = 0; j<bateauxJ[i].getTaille(); j++)
+			{
+				int x = 0;
+				int y = 0;
+				if(bateauxJ[i].isVertical())
+				{
+					x = positionX;
+					y = positionY + j;
+					
+				}
+				else
+				{
+					x = positionX + j;
+					y = positionY;
+				}
+				grilleJoueur[x][y] = i+1;
+			}
+		}
+	}
+	/**
 	 * Vérifie qu'une chaîne de caractère correspond bien à un nombre compris entre 1 et 10 inclus.
 	 * @param chaine La chaîne à analyser
 	 * @return TRUE si le nombre est valide, sinon FALSE.
@@ -361,7 +442,7 @@ public class BatailleNavale {
 		System.out.println("----------");
 		if(grilleZaya[positionX][positionY] == 0)
 		{
-			System.out.println("Vous n'avez rien touché !");
+			System.out.println("Vous n'avez rien touche !");
 			grilleZayaV[positionX][positionY] = 1;
 		}
 		else if(grilleZaya[positionX][positionY] == 58)
