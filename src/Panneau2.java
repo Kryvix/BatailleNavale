@@ -32,32 +32,32 @@ public class Panneau2 extends JPanel {
 			for(int n = 0; n<11; n++)
 				numerotation[n] = ImageIO.read(new File("Images/"+n+".png"));
 			for(int z = 0; z <= grille.length; z++)
-				g.drawImage(numerotation[z], 32*z, 32, this);
+				g.drawImage(numerotation[z], 32*z, 0, this);
 			for(int p = 1; p <= grille[0].length; p++)
-				g.drawImage(numerotation[p], 0, 32*p+32, this);
+				g.drawImage(numerotation[p], 0, 32*p, this);
 			
 			for(int i = 0; i < grille.length; i++)
 			{
 				for(int j = 0; j < grille[0].length; j++)
 				{
 					if(grille[i][j] == 0)
-						g.drawImage(img[0], 32*i+32, 32*j+64, this);
+						g.drawImage(img[0], 32*i+32, 32*j+32, this);
 					else if(grille[i][j] < 6)
-						g.drawImage(img[1], 32*i+32, 32*j+64, this);
+						g.drawImage(img[1], 32*i+32, 32*j+32, this);
 					else if(grille[i][j] == 42)
-						g.drawImage(img[3], 32*i+32, 32*j+64, this);
+						g.drawImage(img[3], 32*i+32, 32*j+32, this);
 					else
-						g.drawImage(img[2], 32*i+32, 32*j+64, this);
+						g.drawImage(img[2], 32*i+32, 32*j+32, this);
 				}
 			}
 			if(gagne)
 			{
-				g.drawImage(IMGgagne, 0, 32, this);
+				g.drawImage(IMGgagne, 0, 0, this);
 			}
 			
 			if(perdu)
 			{
-				g.drawImage(IMGperdu, 0, 32, this);
+				g.drawImage(IMGperdu, 0, 0, this);
 			}
 		} 
 		catch (IOException e) 

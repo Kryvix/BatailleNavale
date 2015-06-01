@@ -2,6 +2,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
+import java.awt.Dimension;
 
 import javax.swing.JFrame;
 /**
@@ -22,14 +23,16 @@ public class Fenetre extends JFrame {
 	 */
 	public Fenetre(String nom, boolean Zaya)
 	{
+		Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+		int width  = (int)dimension.getWidth();
 		this.Zaya = Zaya;
 		this.setTitle(nom);
 		this.setSize(352,352);
 		this.setUndecorated(true);
 		if(Zaya)
-			this.setLocation(0, 0);
+			this.setLocation(width-714, 0);
 		else
-			this.setLocation(360, 0);
+			this.setLocation(width-352, 0);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);         
 		this.setAlwaysOnTop(false);
 		this.setResizable(false); 
