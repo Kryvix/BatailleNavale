@@ -44,12 +44,12 @@ public class Panneau extends JPanel {
 			
 			if(gagne)
 			{
-				g.drawImage(IMGgagne, 0, 0, this);
+				g.drawImage(IMGgagne, 32, 32, this);
 			}
 			
 			if(perdu)
 			{
-				g.drawImage(IMGperdu, 0, 0, this);
+				g.drawImage(IMGperdu, 32, 32, this);
 			}
 			
 		} 

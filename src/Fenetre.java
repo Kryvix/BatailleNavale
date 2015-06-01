@@ -34,7 +34,7 @@ public class Fenetre extends JFrame {
 		else
 			this.setLocation(width-352, 0);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);         
-		this.setAlwaysOnTop(false);
+		this.setAlwaysOnTop(true);
 		this.setResizable(false); 
 		if(Zaya)
 			this.setContentPane(pan);
