@@ -1,3 +1,8 @@
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseMotionListener;
+
 import javax.swing.JFrame;
 /**
  * Cette classe instancie une fenêtre de jeu.
@@ -8,6 +13,8 @@ public class Fenetre extends JFrame {
 	private Panneau pan = new Panneau();
 	private Panneau2 pan2 = new Panneau2();
 	private boolean Zaya;
+	private int posX = 0;
+	private int posY = 0;
 	/**
 	 * Constructeur d'une fenêtre
 	 * @param nom Le nom qui s'affiche en haut de la fenêtre.
@@ -17,7 +24,7 @@ public class Fenetre extends JFrame {
 	{
 		this.Zaya = Zaya;
 		this.setTitle(nom);
-		this.setSize(352,384);
+		this.setSize(352,352);
 		this.setUndecorated(true);
 		if(Zaya)
 			this.setLocation(0, 0);
@@ -31,6 +38,23 @@ public class Fenetre extends JFrame {
 		else
 			this.setContentPane(pan2);
 		this.setVisible(true);
+		addMouseListener( new MouseAdapter(){
+			 
+			public void mousePressed(MouseEvent e) {
+					posX = e.getX();    //Position X de la souris au clic
+					posY = e.getY();
+					
+ 
+			   }
+		});
+		addMouseMotionListener( new MouseMotionAdapter(){
+			 
+			 public void mouseDragged(MouseEvent e) {
+	                int depX = e.getX() - posX;
+	                int depY = e.getY() - posY;
+	                setLocation(getX()+depX, getY()+depY);
+	            }
+		});
 	}
 	/**
 	 * Rafraichit l'affichage
