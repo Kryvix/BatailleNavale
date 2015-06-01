@@ -1,4 +1,6 @@
+import java.nio.charset.Charset;
 import java.util.Scanner;
+import java.util.Map.Entry;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -12,7 +14,7 @@ public class BatailleNavale {
 	static Fenetre fen2 = new Fenetre("Votre grille", false);
 	static Bateau[] bateauxJ = new Bateau[5];
 	static Bateau[] bateauxZaya = new Bateau[5];
-	static Scanner sc = new Scanner(System.in);
+	static Scanner sc = new Scanner(System.in, "UTF-8");
 	static int[][] grilleJoueur = new int[10][10];
 	static int[][] grilleJoueurV = new int[12][12];
 	static int[][] grilleZaya = new int[10][10];
